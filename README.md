@@ -5,6 +5,7 @@
 2D Esolang (Be gentle, this was made in only a few hours)  
 
 ![Alt Text](https://raw.githubusercontent.com/Earth13wells/aguja/main/code.gif)
+## output: hello, world!
 ### example usage:
 ```bash
   ~$ gcc aguja.c -o aguja
