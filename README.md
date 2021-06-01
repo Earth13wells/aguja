@@ -25,13 +25,12 @@
 |    \"       |    Pushes every character found to the stack until closed       |   
 |    /\\      |   90° mirrors change IP direction based on input                |
 |    \#       |    180° mirror (Direction agnostic)                             |
-|    |_       |   180° mirrors change IP direction based on input               |
+|    \|_       |   180° mirrors change IP direction based on input               |
 |    .        |   Pop y and x move the IP to (x,y)                              |
 |    &        |   Pop as number and print to stdout                             |
 |    \`       |   Pop as character and print to stdout                          |
 |    ;        |   End the program                                               |
                                             
-# warning these wont work due to github nor using monospace font.                            
 ## Hello, Wold                               
     "!dlrow ,olleH"> `v                                
                   ;^!?<                                    
