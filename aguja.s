@@ -66,18 +66,20 @@ pop:
 .LC0:
 	.string	"r"
 .LC1:
-	.string	"--------------------------"
+	.string	"\n%d:%s"
 .LC2:
-	.string	"dir: %d, d: %d \n"
+	.string	"^"
 .LC3:
-	.string	"r: %d, c: %d\n"
+	.string	"dir: %d, d: %d \n"
 .LC4:
-	.string	"instruction: %c\n"
+	.string	"r: %d, c: %d\n"
 .LC5:
-	.string	"stack: %d, current %d\n"
+	.string	"instruction: %c\n"
 .LC6:
-	.string	" %c"
+	.string	"stack: %d, current %d\n"
 .LC7:
+	.string	" %c"
+.LC8:
 	.string	"%d"
 	.section	.text.startup,"ax",@progbits
 	.p2align 4
@@ -86,223 +88,196 @@ pop:
 main:
 .LFB22:
 	.cfi_startproc
-	pushq	%r13
+	pushq	%r14
 	.cfi_def_cfa_offset 16
-	.cfi_offset 13, -16
-	pushq	%r12
+	.cfi_offset 14, -16
+	pushq	%r13
 	.cfi_def_cfa_offset 24
-	.cfi_offset 12, -24
-	pushq	%rbp
+	.cfi_offset 13, -24
+	pushq	%r12
 	.cfi_def_cfa_offset 32
-	.cfi_offset 6, -32
-	movq	%rsi, %rbp
-	pushq	%rbx
+	.cfi_offset 12, -32
+	movq	%rsi, %r12
+	pushq	%rbp
 	.cfi_def_cfa_offset 40
-	.cfi_offset 3, -40
-	subq	$1320, %rsp
+	.cfi_offset 6, -40
+	pushq	%rbx
+	.cfi_def_cfa_offset 48
+	.cfi_offset 3, -48
+	subq	$1312, %rsp
 	.cfi_def_cfa_offset 1360
 	movq	8(%rsi), %rdi
 	leaq	.LC0(%rip), %rsi
 	movq	%fs:40, %rax
 	movq	%rax, 1304(%rsp)
 	xorl	%eax, %eax
-	leaq	16(%rsp), %r13
+	leaq	16(%rsp), %r14
 	call	fopen@PLT
-	movq	%r13, %rbx
-	movq	%rax, %r12
+	movq	%r14, %rbx
+	movq	%rax, %rbp
 	.p2align 4,,10
 	.p2align 3
 .L17:
 	movq	%rbx, %rdi
-	movq	%r12, %rdx
+	movq	%rbp, %rdx
 	movl	$128, %esi
 	subq	$-128, %rbx
 	call	fgets@PLT
 	testq	%rax, %rax
 	jne	.L17
-	leaq	.L21(%rip), %r12
-	leaq	stack(%rip), %rbx
+	cmpq	$0, 16(%r12)
+	leaq	.L23(%rip), %r13
+	leaq	stack(%rip), %rbp
+	jne	.L78
 	.p2align 4,,10
 	.p2align 3
-.L55:
-	cmpq	$0, 16(%rbp)
-	je	.L18
-	movl	$1, %edi
-	call	sleep@PLT
-	leaq	.LC1(%rip), %rdi
-	call	puts@PLT
-	movl	d(%rip), %edx
-	movl	dir(%rip), %esi
-	xorl	%eax, %eax
-	leaq	.LC2(%rip), %rdi
-	call	printf@PLT
-	movl	c(%rip), %edx
-	movl	r(%rip), %esi
-	xorl	%eax, %eax
-	leaq	.LC3(%rip), %rdi
-	call	printf@PLT
-	movslq	r(%rip), %rax
-	movslq	c(%rip), %rdx
-	leaq	1312(%rsp), %rcx
-	leaq	.LC4(%rip), %rdi
-	salq	$7, %rax
-	addq	%rcx, %rax
-	movsbl	-1296(%rdx,%rax), %esi
-	xorl	%eax, %eax
-	call	printf@PLT
-	movslq	current(%rip), %rax
-	leaq	.LC5(%rip), %rdi
-	movl	(%rbx,%rax,4), %esi
-	movq	%rax, %rdx
-	xorl	%eax, %eax
-	call	printf@PLT
 .L18:
 	movslq	r(%rip), %rcx
 	movslq	c(%rip), %rsi
-	leaq	1312(%rsp), %rdi
+	leaq	1312(%rsp), %rbx
 	movq	%rcx, %rax
 	movq	%rsi, %rdx
 	salq	$7, %rax
-	addq	%rdi, %rax
-	movsbl	-1296(%rsi,%rax), %esi
+	addq	%rbx, %rax
+	movzbl	-1296(%rsi,%rax), %esi
 	leal	-10(%rsi), %eax
 	cmpb	$116, %al
-	ja	.L19
+	ja	.L21
 	movzbl	%al, %eax
-	movslq	(%r12,%rax,4), %rax
-	addq	%r12, %rax
+	movslq	0(%r13,%rax,4), %rax
+	addq	%r13, %rax
 	jmp	*%rax
 	.section	.rodata
 	.align 4
 	.align 4
-.L21:
-	.long	.L49-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L48-.L21
-	.long	.L47-.L21
-	.long	.L46-.L21
-	.long	.L45-.L21
-	.long	.L44-.L21
-	.long	.L43-.L21
-	.long	.L60-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L41-.L21
-	.long	.L40-.L21
-	.long	.L39-.L21
-	.long	.L38-.L21
-	.long	.L37-.L21
-	.long	.L36-.L21
-	.long	.L28-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L35-.L21
-	.long	.L34-.L21
-	.long	.L33-.L21
-	.long	.L32-.L21
-	.long	.L31-.L21
-	.long	.L30-.L21
-	.long	.L29-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L28-.L21
-	.long	.L19-.L21
-	.long	.L27-.L21
-	.long	.L26-.L21
-	.long	.L25-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L24-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L23-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L19-.L21
-	.long	.L22-.L21
-	.long	.L19-.L21
-	.long	.L72-.L21
+.L23:
+	.long	.L51-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L44-.L23
+	.long	.L50-.L23
+	.long	.L49-.L23
+	.long	.L48-.L23
+	.long	.L47-.L23
+	.long	.L46-.L23
+	.long	.L63-.L23
+	.long	.L21-.L23
+	.long	.L44-.L23
+	.long	.L43-.L23
+	.long	.L42-.L23
+	.long	.L41-.L23
+	.long	.L40-.L23
+	.long	.L39-.L23
+	.long	.L38-.L23
+	.long	.L30-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L37-.L23
+	.long	.L36-.L23
+	.long	.L35-.L23
+	.long	.L34-.L23
+	.long	.L33-.L23
+	.long	.L32-.L23
+	.long	.L31-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L30-.L23
+	.long	.L21-.L23
+	.long	.L29-.L23
+	.long	.L28-.L23
+	.long	.L27-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L26-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L25-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L21-.L23
+	.long	.L24-.L23
+	.long	.L21-.L23
+	.long	.L77-.L23
 	.section	.text.startup
 	.p2align 4,,10
 	.p2align 3
-.L73:
+.L79:
 	movl	current(%rip), %ecx
 	leal	1(%rcx), %edx
 	movslq	%edx, %rcx
 	movl	%edx, current(%rip)
-	movl	%eax, (%rbx,%rcx,4)
-.L46:
+	movl	%eax, 0(%rbp,%rcx,4)
+.L49:
 	movl	$1, %edi
 	leaq	1312(%rsp), %rcx
 	call	move
@@ -312,78 +287,134 @@ main:
 	addq	%rcx, %rax
 	movsbl	-1296(%rdx,%rax), %eax
 	cmpb	$34, %al
-	jne	.L73
+	jne	.L79
 	.p2align 4,,10
 	.p2align 3
-.L48:
+.L44:
 	movl	$1, %edi
 	call	move
-	jmp	.L55
-.L28:
+.L82:
+	cmpq	$0, 16(%r12)
+	je	.L18
+.L78:
+	movl	$1, %edi
+	xorl	%ebx, %ebx
+	call	sleep@PLT
+	movslq	r(%rip), %rdx
+	xorl	%eax, %eax
+	leaq	.LC1(%rip), %rdi
+	movq	%rdx, %rsi
+	salq	$7, %rdx
+	addq	%r14, %rdx
+	call	printf@PLT
+	cmpl	$-1, c(%rip)
+	jl	.L20
+	.p2align 4,,10
+	.p2align 3
+.L19:
+	movl	$32, %edi
+	call	putchar@PLT
+	movl	%ebx, %eax
+	addl	$1, %ebx
+	cmpl	%eax, c(%rip)
+	jge	.L19
+.L20:
+	leaq	.LC2(%rip), %rdi
+	call	puts@PLT
+	movl	d(%rip), %edx
+	movl	dir(%rip), %esi
+	xorl	%eax, %eax
+	leaq	.LC3(%rip), %rdi
+	call	printf@PLT
+	movl	c(%rip), %edx
+	movl	r(%rip), %esi
+	xorl	%eax, %eax
+	leaq	.LC4(%rip), %rdi
+	call	printf@PLT
+	movslq	r(%rip), %rax
+	movslq	c(%rip), %rdx
+	leaq	1312(%rsp), %rcx
+	leaq	.LC5(%rip), %rdi
+	salq	$7, %rax
+	addq	%rcx, %rax
+	movsbl	-1296(%rdx,%rax), %esi
+	xorl	%eax, %eax
+	call	printf@PLT
+	movslq	current(%rip), %rax
+	leaq	.LC6(%rip), %rdi
+	movl	0(%rbp,%rax,4), %esi
+	movq	%rax, %rdx
+	xorl	%eax, %eax
+	call	printf@PLT
+	jmp	.L18
+.L30:
 	movl	dir(%rip), %eax
 	subl	$1, %eax
 	cmpl	$3, %eax
-	ja	.L48
-.L23:
+	ja	.L44
+.L25:
 	movl	$3, dir(%rip)
-	jmp	.L48
-.L34:
+	jmp	.L44
+.L36:
 	movl	$1, %edi
 	call	move
 	movq	1304(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L74
-	addq	$1320, %rsp
+	jne	.L80
+	addq	$1312, %rsp
 	.cfi_remember_state
-	.cfi_def_cfa_offset 40
+	.cfi_def_cfa_offset 48
 	xorl	%eax, %eax
 	popq	%rbx
-	.cfi_def_cfa_offset 32
+	.cfi_def_cfa_offset 40
 	popq	%rbp
-	.cfi_def_cfa_offset 24
+	.cfi_def_cfa_offset 32
 	popq	%r12
-	.cfi_def_cfa_offset 16
+	.cfi_def_cfa_offset 24
 	popq	%r13
+	.cfi_def_cfa_offset 16
+	popq	%r14
 	.cfi_def_cfa_offset 8
 	ret
-.L30:
+.L32:
 	.cfi_restore_state
 	movslq	current(%rip), %rax
-	cmpl	$0, (%rbx,%rax,4)
-	je	.L75
-.L72:
+	cmpl	$0, 0(%rbp,%rax,4)
+	je	.L81
+.L77:
 	xorl	%eax, %eax
 	movl	$1, %edi
 	call	pop
 	call	move
-	jmp	.L55
-.L19:
+	jmp	.L82
+.L21:
 	movl	current(%rip), %eax
-	subl	$48, %esi
-	addl	$1, %eax
-	movslq	%eax, %rdx
-	movl	%esi, (%rbx,%rdx,4)
-	movl	%eax, current(%rip)
-	jmp	.L48
-.L26:
+	leal	1(%rax), %edx
+	movsbl	%sil, %eax
+	movslq	%edx, %rcx
+	subl	$48, %eax
+	movl	%edx, current(%rip)
+	movl	%eax, 0(%rbp,%rcx,4)
+	jmp	.L44
+.L28:
 	movl	dir(%rip), %eax
 	andl	$-3, %eax
 	subl	$1, %eax
-	jne	.L48
-.L27:
+	jne	.L44
+.L29:
 	movl	$1, dir(%rip)
-	jmp	.L48
-.L45:
+	jmp	.L44
+.L48:
 	movl	dir(%rip), %eax
 	subl	$1, %eax
 	cmpl	$3, %eax
-	ja	.L48
-.L31:
+	ja	.L44
+.L33:
 	movl	$2, dir(%rip)
-	jmp	.L48
-.L29:
+	jmp	.L44
+.L31:
 	leaq	12(%rsp), %rsi
-	leaq	.LC6(%rip), %rdi
+	leaq	.LC7(%rip), %rdi
 	xorl	%eax, %eax
 	call	__isoc99_scanf@PLT
 	movl	current(%rip), %eax
@@ -391,171 +422,171 @@ main:
 	addl	$1, %eax
 	movslq	%eax, %rdx
 	movl	%eax, current(%rip)
-	movl	%ecx, (%rbx,%rdx,4)
-	jmp	.L48
-.L22:
+	movl	%ecx, 0(%rbp,%rdx,4)
+	jmp	.L44
+.L24:
 	movl	dir(%rip), %eax
 	subl	$2, %eax
 	andl	$-3, %eax
-	jne	.L48
-	jmp	.L23
-.L24:
+	jne	.L44
+	jmp	.L25
+.L26:
 	movl	current(%rip), %edx
 	leal	1(%rdx), %eax
 	movslq	%eax, %rcx
 	movl	%eax, current(%rip)
-	movl	%edx, (%rbx,%rcx,4)
-	jmp	.L48
-.L25:
+	movl	%edx, 0(%rbp,%rcx,4)
+	jmp	.L44
+.L27:
 	movslq	current(%rip), %rax
-	movl	(%rbx,%rax,4), %edi
+	movl	0(%rbp,%rax,4), %edi
 	call	putchar@PLT
 	xorl	%eax, %eax
 	call	pop
-	jmp	.L48
-.L32:
-	movslq	current(%rip), %rax
-	leal	-1(%rax), %edx
-	movslq	%edx, %rdx
-	movl	(%rbx,%rdx,4), %ecx
-	cmpl	%ecx, (%rbx,%rax,4)
-	je	.L76
-	movl	$0, (%rbx,%rdx,4)
-	jmp	.L72
-.L33:
-	movl	$4, dir(%rip)
-	jmp	.L48
+	jmp	.L44
+.L34:
+	movslq	current(%rip), %rdx
+	leal	-1(%rdx), %eax
+	cltq
+	movl	0(%rbp,%rax,4), %ecx
+	cmpl	%ecx, 0(%rbp,%rdx,4)
+	je	.L83
+	movl	$0, 0(%rbp,%rax,4)
+	jmp	.L77
 .L35:
+	movl	$4, dir(%rip)
+	jmp	.L44
+.L37:
 	movslq	current(%rip), %rax
-	movl	(%rbx,%rax,4), %ecx
+	movl	0(%rbp,%rax,4), %ecx
 	leal	1(%rax), %edx
 	movslq	%edx, %rax
 	movl	%edx, current(%rip)
-	movl	%ecx, (%rbx,%rax,4)
-	jmp	.L48
-.L36:
+	movl	%ecx, 0(%rbp,%rax,4)
+	jmp	.L44
+.L38:
 	movslq	current(%rip), %rax
 	cmpl	$1, %eax
-	jg	.L77
-.L42:
-	movl	(%rbx,%rax,4), %esi
-	leaq	.LC7(%rip), %rdi
+	jg	.L84
+.L45:
+	movl	0(%rbp,%rax,4), %esi
+	leaq	.LC8(%rip), %rdi
 	xorl	%eax, %eax
 	call	printf@PLT
 	xorl	%eax, %eax
 	call	pop
-	jmp	.L48
-.L37:
-	movslq	current(%rip), %rdx
-	leal	-1(%rdx), %eax
-	cltq
-	movl	(%rbx,%rax,4), %ecx
-	subl	(%rbx,%rdx,4), %ecx
-	movl	%ecx, (%rbx,%rax,4)
-	xorl	%eax, %eax
-	call	pop
-	jmp	.L48
-.L38:
-	movslq	current(%rip), %rdi
-	leal	-1(%rdi), %ecx
-	movslq	%ecx, %rcx
-	movl	(%rbx,%rcx,4), %eax
-	cltd
-	idivl	(%rbx,%rdi,4)
-	movl	%eax, (%rbx,%rcx,4)
-	xorl	%eax, %eax
-	call	pop
-	jmp	.L48
+	jmp	.L44
 .L39:
 	movslq	current(%rip), %rdx
 	leal	-1(%rdx), %eax
-	movl	(%rbx,%rdx,4), %edx
 	cltq
-	addl	%edx, (%rbx,%rax,4)
+	movl	0(%rbp,%rax,4), %ecx
+	subl	0(%rbp,%rdx,4), %ecx
+	movl	%ecx, 0(%rbp,%rax,4)
 	xorl	%eax, %eax
 	call	pop
-	jmp	.L48
+	jmp	.L44
 .L40:
+	movslq	current(%rip), %rdi
+	leal	-1(%rdi), %ecx
+	movslq	%ecx, %rcx
+	movl	0(%rbp,%rcx,4), %eax
+	cltd
+	idivl	0(%rbp,%rdi,4)
+	movl	%eax, 0(%rbp,%rcx,4)
+	xorl	%eax, %eax
+	call	pop
+	jmp	.L44
+.L41:
 	movslq	current(%rip), %rdx
 	leal	-1(%rdx), %eax
-	movl	(%rbx,%rdx,4), %edx
+	movl	0(%rbp,%rdx,4), %edx
 	cltq
-	imull	(%rbx,%rax,4), %edx
-	movl	%edx, (%rbx,%rax,4)
+	addl	%edx, 0(%rbp,%rax,4)
 	xorl	%eax, %eax
 	call	pop
-	jmp	.L48
-.L41:
+	jmp	.L44
+.L42:
+	movslq	current(%rip), %rdx
+	leal	-1(%rdx), %eax
+	movl	0(%rbp,%rdx,4), %edx
+	cltq
+	imull	0(%rbp,%rax,4), %edx
+	movl	%edx, 0(%rbp,%rax,4)
+	xorl	%eax, %eax
+	call	pop
+	jmp	.L44
+.L43:
 	movl	$2, dir(%rip)
-	subl	$1, %edx
+	leal	-1(%rdx), %eax
 	salq	$7, %rcx
-	movslq	%edx, %rdx
-	addq	%r13, %rcx
+	cltq
+	leaq	(%r14,%rcx), %rdx
 	.p2align 4,,10
 	.p2align 3
-.L50:
-	movl	%edx, %eax
-	subq	$1, %rdx
-	cmpb	$40, 1(%rcx,%rdx)
-	jne	.L50
-	movl	%eax, c(%rip)
-	jmp	.L48
-.L43:
+.L52:
+	movl	%eax, %ecx
+	subq	$1, %rax
+	cmpb	$40, 1(%rdx,%rax)
+	jne	.L52
+	movl	%ecx, c(%rip)
+	jmp	.L44
+.L46:
 	movslq	current(%rip), %rax
 	leal	-1(%rax), %ecx
-	movl	(%rbx,%rax,4), %eax
+	movl	0(%rbp,%rax,4), %eax
 	movslq	%ecx, %rcx
 	cltd
-	idivl	(%rbx,%rcx,4)
+	idivl	0(%rbp,%rcx,4)
 	xorl	%eax, %eax
-	movl	%edx, (%rbx,%rcx,4)
+	movl	%edx, 0(%rbp,%rcx,4)
 	call	pop
-	jmp	.L48
-.L44:
+	jmp	.L44
+.L47:
 	movslq	current(%rip), %rcx
 	movq	%rcx, %rax
-	movl	(%rbx,%rcx,4), %esi
+	movl	0(%rbp,%rcx,4), %esi
 	subl	$1, %eax
 	movslq	%eax, %rdx
-	movl	(%rbx,%rdx,4), %edi
-	movl	%edi, (%rbx,%rcx,4)
-	movl	%esi, (%rbx,%rdx,4)
 	movl	%eax, current(%rip)
-	jmp	.L48
-.L47:
+	movl	0(%rbp,%rdx,4), %edi
+	movl	%edi, 0(%rbp,%rcx,4)
+	movl	%esi, 0(%rbp,%rdx,4)
+	jmp	.L44
+.L50:
 	movl	$1, %edi
 	call	move
-	jmp	.L48
-.L49:
+	jmp	.L44
+.L51:
 	subl	$1, %edx
 	movl	%edx, c(%rip)
-	jmp	.L48
-.L77:
+	jmp	.L44
+.L84:
 	movslq	%eax, %rdx
 	subl	$1, %eax
 	cltq
-	movl	(%rbx,%rdx,4), %edx
-	movl	(%rbx,%rax,4), %eax
+	movl	0(%rbp,%rdx,4), %edx
+	movl	0(%rbp,%rax,4), %eax
 	movl	%edx, r(%rip)
 	movl	%eax, c(%rip)
 	xorl	%eax, %eax
 	call	pop
 	xorl	%eax, %eax
 	call	pop
-	jmp	.L48
-.L76:
-	movl	$1, (%rbx,%rdx,4)
+	jmp	.L44
+.L83:
+	movl	$1, 0(%rbp,%rax,4)
 	xorl	%eax, %eax
 	call	pop
-	jmp	.L48
-.L75:
+	jmp	.L44
+.L81:
 	movl	$1, %edi
 	call	move
-	jmp	.L72
-.L60:
+	jmp	.L77
+.L63:
 	movslq	current(%rip), %rax
-	jmp	.L42
-.L74:
+	jmp	.L45
+.L80:
 	call	__stack_chk_fail@PLT
 	.cfi_endproc
 .LFE22:

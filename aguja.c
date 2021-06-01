@@ -35,15 +35,21 @@ int main(int argc, char *argv[]){
     }
     //printf("%s\n", code[0]);
     int a = 1;
-    //int p = 0;
+    int p = 0;
     while(a != 0){
         if(argv[2]){
             sleep(1);
-            printf("--------------------------\n");
+            printf("\n%d:%s",r,code[r]);
+            for(p = 0; p < c+2; p++){
+                printf(" ");
+            }
+            printf("^\n");
             printf("dir: %d, d: %d \n", dir,d);
             printf("r: %d, c: %d\n", r,c);
             printf("instruction: %c\n", code[r][c]);
             printf("stack: %d, current %d\n",stack[current], current);
+            //printf("\033[2J\033[1;1H");\
+
         }
         switch(code[r][c]){
             //
@@ -136,7 +142,9 @@ int main(int argc, char *argv[]){
             case ';': //End
                 a = 0;
                 break;
-            case ' ':
+            case ' ': //just to stop these from being pushed to stack
+                break;
+            case '(':
                 break;
             //
             //Logic
