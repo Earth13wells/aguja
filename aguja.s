@@ -632,8 +632,8 @@ null:
 	.globl	stack
 	.align 32
 	.type	stack, @object
-	.size	stack, 400
+	.size	stack, 4000
 stack:
-	.zero	400
+	.zero	4000
 	.ident	"GCC: (GNU) 10.2.0"
 	.section	.note.GNU-stack,"",@progbits

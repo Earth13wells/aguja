@@ -6,7 +6,7 @@
 #define LSIZ 128
 #define RSIZ 10
 
-int stack[100];  //used to store data during runtime
+int stack[1000];  //used to store data during runtime
 int null[1];     //used to unset stack elements
 int current = 0; //Current element in the stack
 
