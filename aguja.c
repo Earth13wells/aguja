@@ -6,17 +6,14 @@
 #define LSIZ 128
 #define RSIZ 10
 
-int stack[100];
-int null[1];
-int current = 0;
+int stack[100];  //used to store data during runtime
+int null[1];     //used to unset stack elements
+int current = 0; //Current element in the stack
 
-int y = 0;
-int c = 0;
-int r = 0;
-int i = 0;
-int d = 1;
-int dir = 2;
-int num;
+int c = 0;   //stores the current IP column
+int r = 0;   //stores the current IP row
+int d = 1;   //used to modify the dir var +/-
+int dir = 2; //used to conroll the current direction of IP
 
 int move(int dir);
 int pop();
@@ -29,6 +26,8 @@ int main(int argc, char *argv[]){
     FILE *fptr = NULL;
     int tot = 0;
     int hold;
+    int i = 0;
+    int num;
 
     fptr = fopen(argv[1], "r");
     while(fgets(code[i], LSIZ, fptr)){

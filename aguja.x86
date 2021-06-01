@@ -1,0 +1,967 @@
+
+aguja.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <main>:
+int dir = 2; //used to conroll the current direction of IP
+
+int move(int dir);
+int pop();
+
+int main(int argc, char *argv[]){
+   0:	55                   	push   rbp
+   1:	48 89 e5             	mov    rbp,rsp
+   4:	48 81 ec 50 05 00 00 	sub    rsp,0x550
+   b:	89 bd bc fa ff ff    	mov    DWORD PTR [rbp-0x544],edi
+  11:	48 89 b5 b0 fa ff ff 	mov    QWORD PTR [rbp-0x550],rsi
+  18:	64 48 8b 04 25 28 00 	mov    rax,QWORD PTR fs:0x28
+  1f:	00 00 
+  21:	48 89 45 f8          	mov    QWORD PTR [rbp-0x8],rax
+  25:	31 c0                	xor    eax,eax
+
+//GETTING THE FILE
+    char code[RSIZ][LSIZ];
+    char fname[20] = "text.one";
+  27:	48 b8 74 65 78 74 2e 	movabs rax,0x656e6f2e74786574
+  2e:	6f 6e 65 
+  31:	ba 00 00 00 00       	mov    edx,0x0
+  36:	48 89 45 e0          	mov    QWORD PTR [rbp-0x20],rax
+  3a:	48 89 55 e8          	mov    QWORD PTR [rbp-0x18],rdx
+  3e:	c7 45 f0 00 00 00 00 	mov    DWORD PTR [rbp-0x10],0x0
+    FILE *fptr = NULL;
+  45:	48 c7 85 d8 fa ff ff 	mov    QWORD PTR [rbp-0x528],0x0
+  4c:	00 00 00 00 
+    int tot = 0;
+  50:	c7 85 d0 fa ff ff 00 	mov    DWORD PTR [rbp-0x530],0x0
+  57:	00 00 00 
+    int hold;
+    int i = 0;
+  5a:	c7 85 c8 fa ff ff 00 	mov    DWORD PTR [rbp-0x538],0x0
+  61:	00 00 00 
+    int num;
+
+    fptr = fopen(argv[1], "r");
+  64:	48 8b 85 b0 fa ff ff 	mov    rax,QWORD PTR [rbp-0x550]
+  6b:	48 83 c0 08          	add    rax,0x8
+  6f:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  72:	48 8d 35 00 00 00 00 	lea    rsi,[rip+0x0]        # 79 <main+0x79>
+  79:	48 89 c7             	mov    rdi,rax
+  7c:	e8 00 00 00 00       	call   81 <main+0x81>
+  81:	48 89 85 d8 fa ff ff 	mov    QWORD PTR [rbp-0x528],rax
+    while(fgets(code[i], LSIZ, fptr)){
+  88:	eb 07                	jmp    91 <main+0x91>
+        i++;
+  8a:	83 85 c8 fa ff ff 01 	add    DWORD PTR [rbp-0x538],0x1
+    while(fgets(code[i], LSIZ, fptr)){
+  91:	48 8d 95 e0 fa ff ff 	lea    rdx,[rbp-0x520]
+  98:	8b 85 c8 fa ff ff    	mov    eax,DWORD PTR [rbp-0x538]
+  9e:	48 98                	cdqe   
+  a0:	48 c1 e0 07          	shl    rax,0x7
+  a4:	48 8d 0c 02          	lea    rcx,[rdx+rax*1]
+  a8:	48 8b 85 d8 fa ff ff 	mov    rax,QWORD PTR [rbp-0x528]
+  af:	48 89 c2             	mov    rdx,rax
+  b2:	be 80 00 00 00       	mov    esi,0x80
+  b7:	48 89 cf             	mov    rdi,rcx
+  ba:	e8 00 00 00 00       	call   bf <main+0xbf>
+  bf:	48 85 c0             	test   rax,rax
+  c2:	75 c6                	jne    8a <main+0x8a>
+    }
+    //printf("%s\n", code[0]);
+    int a = 1;
+  c4:	c7 85 cc fa ff ff 01 	mov    DWORD PTR [rbp-0x534],0x1
+  cb:	00 00 00 
+    //int p = 0;
+    while(a != 0){
+  ce:	e9 c3 09 00 00       	jmp    a96 <main+0xa96>
+        if(argv[2]){
+  d3:	48 8b 85 b0 fa ff ff 	mov    rax,QWORD PTR [rbp-0x550]
+  da:	48 83 c0 10          	add    rax,0x10
+  de:	48 8b 00             	mov    rax,QWORD PTR [rax]
+  e1:	48 85 c0             	test   rax,rax
+  e4:	0f 84 c1 00 00 00    	je     1ab <main+0x1ab>
+            sleep(1);
+  ea:	bf 01 00 00 00       	mov    edi,0x1
+  ef:	e8 00 00 00 00       	call   f4 <main+0xf4>
+            printf("--------------------------\n");
+  f4:	48 8d 3d 00 00 00 00 	lea    rdi,[rip+0x0]        # fb <main+0xfb>
+  fb:	e8 00 00 00 00       	call   100 <main+0x100>
+            printf("dir: %d, d: %d \n", dir,d);
+ 100:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 106 <main+0x106>
+ 106:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 10c <main+0x10c>
+ 10c:	89 c6                	mov    esi,eax
+ 10e:	48 8d 3d 00 00 00 00 	lea    rdi,[rip+0x0]        # 115 <main+0x115>
+ 115:	b8 00 00 00 00       	mov    eax,0x0
+ 11a:	e8 00 00 00 00       	call   11f <main+0x11f>
+            printf("r: %d, c: %d\n", r,c);
+ 11f:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 125 <main+0x125>
+ 125:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 12b <main+0x12b>
+ 12b:	89 c6                	mov    esi,eax
+ 12d:	48 8d 3d 00 00 00 00 	lea    rdi,[rip+0x0]        # 134 <main+0x134>
+ 134:	b8 00 00 00 00       	mov    eax,0x0
+ 139:	e8 00 00 00 00       	call   13e <main+0x13e>
+            printf("instruction: %c\n", code[r][c]);
+ 13e:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 144 <main+0x144>
+ 144:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 14a <main+0x14a>
+ 14a:	48 63 d2             	movsxd rdx,edx
+ 14d:	48 98                	cdqe   
+ 14f:	48 c1 e0 07          	shl    rax,0x7
+ 153:	48 01 e8             	add    rax,rbp
+ 156:	48 01 d0             	add    rax,rdx
+ 159:	48 2d 20 05 00 00    	sub    rax,0x520
+ 15f:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+ 162:	0f be c0             	movsx  eax,al
+ 165:	89 c6                	mov    esi,eax
+ 167:	48 8d 3d 00 00 00 00 	lea    rdi,[rip+0x0]        # 16e <main+0x16e>
+ 16e:	b8 00 00 00 00       	mov    eax,0x0
+ 173:	e8 00 00 00 00       	call   178 <main+0x178>
+            printf("stack: %d, current %d\n",stack[current], current);
+ 178:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 17e <main+0x17e>
+ 17e:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 184 <main+0x184>
+ 184:	48 98                	cdqe   
+ 186:	48 8d 0c 85 00 00 00 	lea    rcx,[rax*4+0x0]
+ 18d:	00 
+ 18e:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 195 <main+0x195>
+ 195:	8b 04 01             	mov    eax,DWORD PTR [rcx+rax*1]
+ 198:	89 c6                	mov    esi,eax
+ 19a:	48 8d 3d 00 00 00 00 	lea    rdi,[rip+0x0]        # 1a1 <main+0x1a1>
+ 1a1:	b8 00 00 00 00       	mov    eax,0x0
+ 1a6:	e8 00 00 00 00       	call   1ab <main+0x1ab>
+        }
+        switch(code[r][c]){
+ 1ab:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 1b1 <main+0x1b1>
+ 1b1:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 1b7 <main+0x1b7>
+ 1b7:	48 63 d2             	movsxd rdx,edx
+ 1ba:	48 98                	cdqe   
+ 1bc:	48 c1 e0 07          	shl    rax,0x7
+ 1c0:	48 01 e8             	add    rax,rbp
+ 1c3:	48 01 d0             	add    rax,rdx
+ 1c6:	48 2d 20 05 00 00    	sub    rax,0x520
+ 1cc:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+ 1cf:	0f be c0             	movsx  eax,al
+ 1d2:	83 e8 0a             	sub    eax,0xa
+ 1d5:	83 f8 74             	cmp    eax,0x74
+ 1d8:	0f 87 48 08 00 00    	ja     a26 <main+0xa26>
+ 1de:	89 c0                	mov    eax,eax
+ 1e0:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 1e7:	00 
+ 1e8:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 1ef <main+0x1ef>
+ 1ef:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 1f2:	48 98                	cdqe   
+ 1f4:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 1fb <main+0x1fb>
+ 1fb:	48 01 d0             	add    rax,rdx
+ 1fe:	ff e0                	jmp    rax
+            //
+            //Flow Controll
+            //
+            case '^':
+                dir = 1;
+ 200:	c7 05 00 00 00 00 01 	mov    DWORD PTR [rip+0x0],0x1        # 20a <main+0x20a>
+ 207:	00 00 00 
+                break;
+ 20a:	e9 7d 08 00 00       	jmp    a8c <main+0xa8c>
+            case '>':
+                dir = 2;
+ 20f:	c7 05 00 00 00 00 02 	mov    DWORD PTR [rip+0x0],0x2        # 219 <main+0x219>
+ 216:	00 00 00 
+                break;
+ 219:	e9 6e 08 00 00       	jmp    a8c <main+0xa8c>
+            case 'v':
+                dir = 3;
+ 21e:	c7 05 00 00 00 00 03 	mov    DWORD PTR [rip+0x0],0x3        # 228 <main+0x228>
+ 225:	00 00 00 
+                break;
+ 228:	e9 5f 08 00 00       	jmp    a8c <main+0xa8c>
+            case '<':
+                dir = 4;
+ 22d:	c7 05 00 00 00 00 04 	mov    DWORD PTR [rip+0x0],0x4        # 237 <main+0x237>
+ 234:	00 00 00 
+                break;
+ 237:	e9 50 08 00 00       	jmp    a8c <main+0xa8c>
+            case '\n':
+                c--;
+ 23c:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 242 <main+0x242>
+ 242:	83 e8 01             	sub    eax,0x1
+ 245:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # 24b <main+0x24b>
+                break;
+ 24b:	e9 3c 08 00 00       	jmp    a8c <main+0xa8c>
+            case ')': //Loop
+                if(dir = 2){
+ 250:	c7 05 00 00 00 00 02 	mov    DWORD PTR [rip+0x0],0x2        # 25a <main+0x25a>
+ 257:	00 00 00 
+                    while(code[r][c] != '('){
+ 25a:	eb 0f                	jmp    26b <main+0x26b>
+                        c--;
+ 25c:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 262 <main+0x262>
+ 262:	83 e8 01             	sub    eax,0x1
+ 265:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # 26b <main+0x26b>
+                    while(code[r][c] != '('){
+ 26b:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 271 <main+0x271>
+ 271:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 277 <main+0x277>
+ 277:	48 63 d2             	movsxd rdx,edx
+ 27a:	48 98                	cdqe   
+ 27c:	48 c1 e0 07          	shl    rax,0x7
+ 280:	48 01 e8             	add    rax,rbp
+ 283:	48 01 d0             	add    rax,rdx
+ 286:	48 2d 20 05 00 00    	sub    rax,0x520
+ 28c:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+ 28f:	3c 28                	cmp    al,0x28
+ 291:	75 c9                	jne    25c <main+0x25c>
+                    }
+                }
+                break;
+ 293:	e9 f4 07 00 00       	jmp    a8c <main+0xa8c>
+            case '/': //90° mirror
+                switch(dir){
+ 298:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 29e <main+0x29e>
+ 29e:	83 f8 04             	cmp    eax,0x4
+ 2a1:	74 44                	je     2e7 <main+0x2e7>
+ 2a3:	83 f8 04             	cmp    eax,0x4
+ 2a6:	0f 8f d6 07 00 00    	jg     a82 <main+0xa82>
+ 2ac:	83 f8 03             	cmp    eax,0x3
+ 2af:	74 2c                	je     2dd <main+0x2dd>
+ 2b1:	83 f8 03             	cmp    eax,0x3
+ 2b4:	0f 8f c8 07 00 00    	jg     a82 <main+0xa82>
+ 2ba:	83 f8 01             	cmp    eax,0x1
+ 2bd:	74 0a                	je     2c9 <main+0x2c9>
+ 2bf:	83 f8 02             	cmp    eax,0x2
+ 2c2:	74 0f                	je     2d3 <main+0x2d3>
+                    case 4:
+                        dir = 3;
+                    default:
+                        ;
+                }
+                break;
+ 2c4:	e9 b9 07 00 00       	jmp    a82 <main+0xa82>
+                        dir = 2;
+ 2c9:	c7 05 00 00 00 00 02 	mov    DWORD PTR [rip+0x0],0x2        # 2d3 <main+0x2d3>
+ 2d0:	00 00 00 
+                        dir = 1;
+ 2d3:	c7 05 00 00 00 00 01 	mov    DWORD PTR [rip+0x0],0x1        # 2dd <main+0x2dd>
+ 2da:	00 00 00 
+                        dir = 4;
+ 2dd:	c7 05 00 00 00 00 04 	mov    DWORD PTR [rip+0x0],0x4        # 2e7 <main+0x2e7>
+ 2e4:	00 00 00 
+                        dir = 3;
+ 2e7:	c7 05 00 00 00 00 03 	mov    DWORD PTR [rip+0x0],0x3        # 2f1 <main+0x2f1>
+ 2ee:	00 00 00 
+                break;
+ 2f1:	e9 8c 07 00 00       	jmp    a82 <main+0xa82>
+            case '\\': //90° mirror
+                switch(dir){
+ 2f6:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 2fc <main+0x2fc>
+ 2fc:	83 f8 04             	cmp    eax,0x4
+ 2ff:	74 44                	je     345 <main+0x345>
+ 301:	83 f8 04             	cmp    eax,0x4
+ 304:	0f 8f 7b 07 00 00    	jg     a85 <main+0xa85>
+ 30a:	83 f8 03             	cmp    eax,0x3
+ 30d:	74 2c                	je     33b <main+0x33b>
+ 30f:	83 f8 03             	cmp    eax,0x3
+ 312:	0f 8f 6d 07 00 00    	jg     a85 <main+0xa85>
+ 318:	83 f8 01             	cmp    eax,0x1
+ 31b:	74 0a                	je     327 <main+0x327>
+ 31d:	83 f8 02             	cmp    eax,0x2
+ 320:	74 0f                	je     331 <main+0x331>
+                    case 4:
+                        dir = 3;
+                    default:
+                        ;
+                }
+                break;
+ 322:	e9 5e 07 00 00       	jmp    a85 <main+0xa85>
+                        dir = 4;
+ 327:	c7 05 00 00 00 00 04 	mov    DWORD PTR [rip+0x0],0x4        # 331 <main+0x331>
+ 32e:	00 00 00 
+                        dir = 1;
+ 331:	c7 05 00 00 00 00 01 	mov    DWORD PTR [rip+0x0],0x1        # 33b <main+0x33b>
+ 338:	00 00 00 
+                        dir = 4;
+ 33b:	c7 05 00 00 00 00 04 	mov    DWORD PTR [rip+0x0],0x4        # 345 <main+0x345>
+ 342:	00 00 00 
+                        dir = 3;
+ 345:	c7 05 00 00 00 00 03 	mov    DWORD PTR [rip+0x0],0x3        # 34f <main+0x34f>
+ 34c:	00 00 00 
+                break;
+ 34f:	e9 31 07 00 00       	jmp    a85 <main+0xa85>
+            case '#': //180° mirror (Direction agnostic)
+                switch(dir){
+ 354:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 35a <main+0x35a>
+ 35a:	83 f8 04             	cmp    eax,0x4
+ 35d:	74 44                	je     3a3 <main+0x3a3>
+ 35f:	83 f8 04             	cmp    eax,0x4
+ 362:	0f 8f 20 07 00 00    	jg     a88 <main+0xa88>
+ 368:	83 f8 03             	cmp    eax,0x3
+ 36b:	74 2c                	je     399 <main+0x399>
+ 36d:	83 f8 03             	cmp    eax,0x3
+ 370:	0f 8f 12 07 00 00    	jg     a88 <main+0xa88>
+ 376:	83 f8 01             	cmp    eax,0x1
+ 379:	74 0a                	je     385 <main+0x385>
+ 37b:	83 f8 02             	cmp    eax,0x2
+ 37e:	74 0f                	je     38f <main+0x38f>
+                    case 4:
+                        dir = 2;
+                    default:
+                        ;
+                }
+                break;
+ 380:	e9 03 07 00 00       	jmp    a88 <main+0xa88>
+                        dir = 3;
+ 385:	c7 05 00 00 00 00 03 	mov    DWORD PTR [rip+0x0],0x3        # 38f <main+0x38f>
+ 38c:	00 00 00 
+                        dir = 4;
+ 38f:	c7 05 00 00 00 00 04 	mov    DWORD PTR [rip+0x0],0x4        # 399 <main+0x399>
+ 396:	00 00 00 
+                        dir = 1;
+ 399:	c7 05 00 00 00 00 01 	mov    DWORD PTR [rip+0x0],0x1        # 3a3 <main+0x3a3>
+ 3a0:	00 00 00 
+                        dir = 2;
+ 3a3:	c7 05 00 00 00 00 02 	mov    DWORD PTR [rip+0x0],0x2        # 3ad <main+0x3ad>
+ 3aa:	00 00 00 
+                break;
+ 3ad:	e9 d6 06 00 00       	jmp    a88 <main+0xa88>
+            case '|': //180° mirror
+            switch(dir){
+ 3b2:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 3b8 <main+0x3b8>
+ 3b8:	83 f8 02             	cmp    eax,0x2
+ 3bb:	74 0a                	je     3c7 <main+0x3c7>
+ 3bd:	83 f8 04             	cmp    eax,0x4
+ 3c0:	74 0f                	je     3d1 <main+0x3d1>
+                    case 4:
+                        dir = 3;
+                    default:
+                        ;
+                }
+                break;
+ 3c2:	e9 c5 06 00 00       	jmp    a8c <main+0xa8c>
+                        dir = 1;
+ 3c7:	c7 05 00 00 00 00 01 	mov    DWORD PTR [rip+0x0],0x1        # 3d1 <main+0x3d1>
+ 3ce:	00 00 00 
+                        dir = 3;
+ 3d1:	c7 05 00 00 00 00 03 	mov    DWORD PTR [rip+0x0],0x3        # 3db <main+0x3db>
+ 3d8:	00 00 00 
+                break;
+ 3db:	e9 ac 06 00 00       	jmp    a8c <main+0xa8c>
+            case '_': //180° mirror
+                switch(dir){
+ 3e0:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 3e6 <main+0x3e6>
+ 3e6:	83 f8 01             	cmp    eax,0x1
+ 3e9:	74 0a                	je     3f5 <main+0x3f5>
+ 3eb:	83 f8 03             	cmp    eax,0x3
+ 3ee:	74 0f                	je     3ff <main+0x3ff>
+                    case 3:
+                        dir = 1;
+                    default:
+                        ;
+                }
+                break;
+ 3f0:	e9 97 06 00 00       	jmp    a8c <main+0xa8c>
+                        dir = 3;
+ 3f5:	c7 05 00 00 00 00 03 	mov    DWORD PTR [rip+0x0],0x3        # 3ff <main+0x3ff>
+ 3fc:	00 00 00 
+                        dir = 1;
+ 3ff:	c7 05 00 00 00 00 01 	mov    DWORD PTR [rip+0x0],0x1        # 409 <main+0x409>
+ 406:	00 00 00 
+                break;
+ 409:	e9 7e 06 00 00       	jmp    a8c <main+0xa8c>
+            case ';': //End
+                a = 0;
+ 40e:	c7 85 cc fa ff ff 00 	mov    DWORD PTR [rbp-0x534],0x0
+ 415:	00 00 00 
+                break;
+ 418:	e9 6f 06 00 00       	jmp    a8c <main+0xa8c>
+                break;
+            //
+            //Logic
+            //
+            case '!': //Trampoline
+                move(1);
+ 41d:	bf 01 00 00 00       	mov    edi,0x1
+ 422:	e8 00 00 00 00       	call   427 <main+0x427>
+                break;
+ 427:	e9 60 06 00 00       	jmp    a8c <main+0xa8c>
+            case '?': //Conditional trampoline
+                if(stack[current] == 0){
+ 42c:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 432 <main+0x432>
+ 432:	48 98                	cdqe   
+ 434:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 43b:	00 
+ 43c:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 443 <main+0x443>
+ 443:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 446:	85 c0                	test   eax,eax
+ 448:	75 0a                	jne    454 <main+0x454>
+                    move(1);
+ 44a:	bf 01 00 00 00       	mov    edi,0x1
+ 44f:	e8 00 00 00 00       	call   454 <main+0x454>
+                }
+                pop();
+ 454:	b8 00 00 00 00       	mov    eax,0x0
+ 459:	e8 00 00 00 00       	call   45e <main+0x45e>
+                break;
+ 45e:	e9 29 06 00 00       	jmp    a8c <main+0xa8c>
+            //
+            //Stack Manipulation
+            //
+            case ':': //Duplicate the top value on the stack.
+                stack[current+1] = stack[current];
+ 463:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 469 <main+0x469>
+ 469:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 46f <main+0x46f>
+ 46f:	8d 4a 01             	lea    ecx,[rdx+0x1]
+ 472:	48 98                	cdqe   
+ 474:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 47b:	00 
+ 47c:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 483 <main+0x483>
+ 483:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 486:	48 63 d1             	movsxd rdx,ecx
+ 489:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ 490:	00 
+ 491:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 498 <main+0x498>
+ 498:	89 04 11             	mov    DWORD PTR [rcx+rdx*1],eax
+                current++;
+ 49b:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 4a1 <main+0x4a1>
+ 4a1:	83 c0 01             	add    eax,0x1
+ 4a4:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # 4aa <main+0x4aa>
+                break;
+ 4aa:	e9 dd 05 00 00       	jmp    a8c <main+0xa8c>
+            case '~': //Remove the top value from the stack.
+                pop();
+ 4af:	b8 00 00 00 00       	mov    eax,0x0
+ 4b4:	e8 00 00 00 00       	call   4b9 <main+0x4b9>
+                break;
+ 4b9:	e9 ce 05 00 00       	jmp    a8c <main+0xa8c>
+            case '$': //Swap the top two values on the stack
+                hold = stack[current];
+ 4be:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 4c4 <main+0x4c4>
+ 4c4:	48 98                	cdqe   
+ 4c6:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 4cd:	00 
+ 4ce:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 4d5 <main+0x4d5>
+ 4d5:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 4d8:	89 85 d4 fa ff ff    	mov    DWORD PTR [rbp-0x52c],eax
+                stack[current] = stack[current-1];
+ 4de:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 4e4 <main+0x4e4>
+ 4e4:	83 e8 01             	sub    eax,0x1
+ 4e7:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 4ed <main+0x4ed>
+ 4ed:	48 98                	cdqe   
+ 4ef:	48 8d 0c 85 00 00 00 	lea    rcx,[rax*4+0x0]
+ 4f6:	00 
+ 4f7:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 4fe <main+0x4fe>
+ 4fe:	8b 04 01             	mov    eax,DWORD PTR [rcx+rax*1]
+ 501:	48 63 d2             	movsxd rdx,edx
+ 504:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ 50b:	00 
+ 50c:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 513 <main+0x513>
+ 513:	89 04 11             	mov    DWORD PTR [rcx+rdx*1],eax
+                stack[current-1] = hold;
+ 516:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 51c <main+0x51c>
+ 51c:	83 e8 01             	sub    eax,0x1
+ 51f:	48 98                	cdqe   
+ 521:	48 8d 0c 85 00 00 00 	lea    rcx,[rax*4+0x0]
+ 528:	00 
+ 529:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 530 <main+0x530>
+ 530:	8b 85 d4 fa ff ff    	mov    eax,DWORD PTR [rbp-0x52c]
+ 536:	89 04 11             	mov    DWORD PTR [rcx+rdx*1],eax
+                current --;
+ 539:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 53f <main+0x53f>
+ 53f:	83 e8 01             	sub    eax,0x1
+ 542:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # 548 <main+0x548>
+                break;
+ 548:	e9 3f 05 00 00       	jmp    a8c <main+0xa8c>
+            case '@': //USER INPUT
+                scanf(" %c", &num);
+ 54d:	48 8d 85 c4 fa ff ff 	lea    rax,[rbp-0x53c]
+ 554:	48 89 c6             	mov    rsi,rax
+ 557:	48 8d 3d 00 00 00 00 	lea    rdi,[rip+0x0]        # 55e <main+0x55e>
+ 55e:	b8 00 00 00 00       	mov    eax,0x0
+ 563:	e8 00 00 00 00       	call   568 <main+0x568>
+                stack[current+1] = num;
+ 568:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 56e <main+0x56e>
+ 56e:	8d 50 01             	lea    edx,[rax+0x1]
+ 571:	8b 85 c4 fa ff ff    	mov    eax,DWORD PTR [rbp-0x53c]
+ 577:	48 63 d2             	movsxd rdx,edx
+ 57a:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ 581:	00 
+ 582:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 589 <main+0x589>
+ 589:	89 04 11             	mov    DWORD PTR [rcx+rdx*1],eax
+                current++;
+ 58c:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 592 <main+0x592>
+ 592:	83 c0 01             	add    eax,0x1
+ 595:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # 59b <main+0x59b>
+                break;
+ 59b:	e9 ec 04 00 00       	jmp    a8c <main+0xa8c>
+            //case 'TODO': //Reverse the stack
+            case 'l': //Push the length of the stack onto stack
+                stack[current+1] = current;
+ 5a0:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 5a6 <main+0x5a6>
+ 5a6:	8d 50 01             	lea    edx,[rax+0x1]
+ 5a9:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 5af <main+0x5af>
+ 5af:	48 63 d2             	movsxd rdx,edx
+ 5b2:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ 5b9:	00 
+ 5ba:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 5c1 <main+0x5c1>
+ 5c1:	89 04 11             	mov    DWORD PTR [rcx+rdx*1],eax
+                current++;
+ 5c4:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 5ca <main+0x5ca>
+ 5ca:	83 c0 01             	add    eax,0x1
+ 5cd:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # 5d3 <main+0x5d3>
+                break;
+ 5d3:	e9 b4 04 00 00       	jmp    a8c <main+0xa8c>
+            case '+': //Pop x,y, push x+y
+                stack[current-1] = stack[current]+stack[current-1];
+ 5d8:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 5de <main+0x5de>
+ 5de:	48 98                	cdqe   
+ 5e0:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 5e7:	00 
+ 5e8:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 5ef <main+0x5ef>
+ 5ef:	8b 0c 02             	mov    ecx,DWORD PTR [rdx+rax*1]
+ 5f2:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 5f8 <main+0x5f8>
+ 5f8:	83 e8 01             	sub    eax,0x1
+ 5fb:	48 98                	cdqe   
+ 5fd:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 604:	00 
+ 605:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 60c <main+0x60c>
+ 60c:	8b 14 02             	mov    edx,DWORD PTR [rdx+rax*1]
+ 60f:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 615 <main+0x615>
+ 615:	83 e8 01             	sub    eax,0x1
+ 618:	01 d1                	add    ecx,edx
+ 61a:	48 98                	cdqe   
+ 61c:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 623:	00 
+ 624:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 62b <main+0x62b>
+ 62b:	89 0c 02             	mov    DWORD PTR [rdx+rax*1],ecx
+                pop();
+ 62e:	b8 00 00 00 00       	mov    eax,0x0
+ 633:	e8 00 00 00 00       	call   638 <main+0x638>
+                break;
+ 638:	e9 4f 04 00 00       	jmp    a8c <main+0xa8c>
+            case '-': //Pop x,y, push x-y
+                stack[current-1] = stack[current-1]- stack[current];
+ 63d:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 643 <main+0x643>
+ 643:	83 e8 01             	sub    eax,0x1
+ 646:	48 98                	cdqe   
+ 648:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 64f:	00 
+ 650:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 657 <main+0x657>
+ 657:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 65a:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 660 <main+0x660>
+ 660:	48 63 d2             	movsxd rdx,edx
+ 663:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ 66a:	00 
+ 66b:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 672 <main+0x672>
+ 672:	8b 34 11             	mov    esi,DWORD PTR [rcx+rdx*1]
+ 675:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 67b <main+0x67b>
+ 67b:	83 ea 01             	sub    edx,0x1
+ 67e:	29 f0                	sub    eax,esi
+ 680:	89 c1                	mov    ecx,eax
+ 682:	48 63 c2             	movsxd rax,edx
+ 685:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 68c:	00 
+ 68d:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 694 <main+0x694>
+ 694:	89 0c 02             	mov    DWORD PTR [rdx+rax*1],ecx
+                pop();
+ 697:	b8 00 00 00 00       	mov    eax,0x0
+ 69c:	e8 00 00 00 00       	call   6a1 <main+0x6a1>
+                break;
+ 6a1:	e9 e6 03 00 00       	jmp    a8c <main+0xa8c>
+            case '*': //Pop x,y, push x*y
+                stack[current-1] = stack[current]*stack[current-1];
+ 6a6:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 6ac <main+0x6ac>
+ 6ac:	48 98                	cdqe   
+ 6ae:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 6b5:	00 
+ 6b6:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 6bd <main+0x6bd>
+ 6bd:	8b 14 02             	mov    edx,DWORD PTR [rdx+rax*1]
+ 6c0:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 6c6 <main+0x6c6>
+ 6c6:	83 e8 01             	sub    eax,0x1
+ 6c9:	48 98                	cdqe   
+ 6cb:	48 8d 0c 85 00 00 00 	lea    rcx,[rax*4+0x0]
+ 6d2:	00 
+ 6d3:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 6da <main+0x6da>
+ 6da:	8b 04 01             	mov    eax,DWORD PTR [rcx+rax*1]
+ 6dd:	8b 0d 00 00 00 00    	mov    ecx,DWORD PTR [rip+0x0]        # 6e3 <main+0x6e3>
+ 6e3:	83 e9 01             	sub    ecx,0x1
+ 6e6:	0f af c2             	imul   eax,edx
+ 6e9:	48 63 d1             	movsxd rdx,ecx
+ 6ec:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ 6f3:	00 
+ 6f4:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 6fb <main+0x6fb>
+ 6fb:	89 04 11             	mov    DWORD PTR [rcx+rdx*1],eax
+                pop();
+ 6fe:	b8 00 00 00 00       	mov    eax,0x0
+ 703:	e8 00 00 00 00       	call   708 <main+0x708>
+                break;
+ 708:	e9 7f 03 00 00       	jmp    a8c <main+0xa8c>
+            case ',': //Pop x,y, push x/y
+                stack[current-1] = stack[current-1]/stack[current];
+ 70d:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 713 <main+0x713>
+ 713:	83 e8 01             	sub    eax,0x1
+ 716:	48 98                	cdqe   
+ 718:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 71f:	00 
+ 720:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 727 <main+0x727>
+ 727:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 72a:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 730 <main+0x730>
+ 730:	48 63 d2             	movsxd rdx,edx
+ 733:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ 73a:	00 
+ 73b:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 742 <main+0x742>
+ 742:	8b 34 11             	mov    esi,DWORD PTR [rcx+rdx*1]
+ 745:	8b 0d 00 00 00 00    	mov    ecx,DWORD PTR [rip+0x0]        # 74b <main+0x74b>
+ 74b:	83 e9 01             	sub    ecx,0x1
+ 74e:	99                   	cdq    
+ 74f:	f7 fe                	idiv   esi
+ 751:	89 c6                	mov    esi,eax
+ 753:	48 63 c1             	movsxd rax,ecx
+ 756:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 75d:	00 
+ 75e:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 765 <main+0x765>
+ 765:	89 34 02             	mov    DWORD PTR [rdx+rax*1],esi
+                pop();
+ 768:	b8 00 00 00 00       	mov    eax,0x0
+ 76d:	e8 00 00 00 00       	call   772 <main+0x772>
+                break;
+ 772:	e9 15 03 00 00       	jmp    a8c <main+0xa8c>
+            case '%': //Modulo
+                stack[current-1] = stack[current]%stack[current-1];
+ 777:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 77d <main+0x77d>
+ 77d:	48 98                	cdqe   
+ 77f:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 786:	00 
+ 787:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 78e <main+0x78e>
+ 78e:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 791:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 797 <main+0x797>
+ 797:	83 ea 01             	sub    edx,0x1
+ 79a:	48 63 d2             	movsxd rdx,edx
+ 79d:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ 7a4:	00 
+ 7a5:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 7ac <main+0x7ac>
+ 7ac:	8b 0c 11             	mov    ecx,DWORD PTR [rcx+rdx*1]
+ 7af:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 7b5 <main+0x7b5>
+ 7b5:	8d 72 ff             	lea    esi,[rdx-0x1]
+ 7b8:	99                   	cdq    
+ 7b9:	f7 f9                	idiv   ecx
+ 7bb:	89 d1                	mov    ecx,edx
+ 7bd:	48 63 c6             	movsxd rax,esi
+ 7c0:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 7c7:	00 
+ 7c8:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 7cf <main+0x7cf>
+ 7cf:	89 0c 02             	mov    DWORD PTR [rdx+rax*1],ecx
+                pop();
+ 7d2:	b8 00 00 00 00       	mov    eax,0x0
+ 7d7:	e8 00 00 00 00       	call   7dc <main+0x7dc>
+                break;
+ 7dc:	e9 ab 02 00 00       	jmp    a8c <main+0xa8c>
+            case '=': //Pop x,y push 1 if true, else 0
+                if(stack[current] == stack[current-1]){
+ 7e1:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 7e7 <main+0x7e7>
+ 7e7:	48 98                	cdqe   
+ 7e9:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 7f0:	00 
+ 7f1:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 7f8 <main+0x7f8>
+ 7f8:	8b 14 02             	mov    edx,DWORD PTR [rdx+rax*1]
+ 7fb:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 801 <main+0x801>
+ 801:	83 e8 01             	sub    eax,0x1
+ 804:	48 98                	cdqe   
+ 806:	48 8d 0c 85 00 00 00 	lea    rcx,[rax*4+0x0]
+ 80d:	00 
+ 80e:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 815 <main+0x815>
+ 815:	8b 04 01             	mov    eax,DWORD PTR [rcx+rax*1]
+ 818:	39 c2                	cmp    edx,eax
+ 81a:	75 30                	jne    84c <main+0x84c>
+                    stack[current-1] = 1;
+ 81c:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 822 <main+0x822>
+ 822:	83 e8 01             	sub    eax,0x1
+ 825:	48 98                	cdqe   
+ 827:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 82e:	00 
+ 82f:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 836 <main+0x836>
+ 836:	c7 04 02 01 00 00 00 	mov    DWORD PTR [rdx+rax*1],0x1
+                    pop();
+ 83d:	b8 00 00 00 00       	mov    eax,0x0
+ 842:	e8 00 00 00 00       	call   847 <main+0x847>
+                }
+                else if(stack[current] != stack[current-1]){
+                    stack[current-1] = 0;
+                    pop();
+                }
+                break;
+ 847:	e9 3f 02 00 00       	jmp    a8b <main+0xa8b>
+                else if(stack[current] != stack[current-1]){
+ 84c:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 852 <main+0x852>
+ 852:	48 98                	cdqe   
+ 854:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 85b:	00 
+ 85c:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 863 <main+0x863>
+ 863:	8b 14 02             	mov    edx,DWORD PTR [rdx+rax*1]
+ 866:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 86c <main+0x86c>
+ 86c:	83 e8 01             	sub    eax,0x1
+ 86f:	48 98                	cdqe   
+ 871:	48 8d 0c 85 00 00 00 	lea    rcx,[rax*4+0x0]
+ 878:	00 
+ 879:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 880 <main+0x880>
+ 880:	8b 04 01             	mov    eax,DWORD PTR [rcx+rax*1]
+ 883:	39 c2                	cmp    edx,eax
+ 885:	0f 84 00 02 00 00    	je     a8b <main+0xa8b>
+                    stack[current-1] = 0;
+ 88b:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 891 <main+0x891>
+ 891:	83 e8 01             	sub    eax,0x1
+ 894:	48 98                	cdqe   
+ 896:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 89d:	00 
+ 89e:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 8a5 <main+0x8a5>
+ 8a5:	c7 04 02 00 00 00 00 	mov    DWORD PTR [rdx+rax*1],0x0
+                    pop();
+ 8ac:	b8 00 00 00 00       	mov    eax,0x0
+ 8b1:	e8 00 00 00 00       	call   8b6 <main+0x8b6>
+                break;
+ 8b6:	e9 d0 01 00 00       	jmp    a8b <main+0xa8b>
+            case '"': //Pushes every character found to the stack until closed
+            //    c++;
+                move(1);
+ 8bb:	bf 01 00 00 00       	mov    edi,0x1
+ 8c0:	e8 00 00 00 00       	call   8c5 <main+0x8c5>
+                while(code[r][c] != '"'){
+ 8c5:	eb 5e                	jmp    925 <main+0x925>
+                    //printf("%c",code[r][c]);
+                    stack[current+1] = code[r][c];
+ 8c7:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 8cd <main+0x8cd>
+ 8cd:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 8d3 <main+0x8d3>
+ 8d3:	48 63 d2             	movsxd rdx,edx
+ 8d6:	48 98                	cdqe   
+ 8d8:	48 c1 e0 07          	shl    rax,0x7
+ 8dc:	48 01 e8             	add    rax,rbp
+ 8df:	48 01 d0             	add    rax,rdx
+ 8e2:	48 2d 20 05 00 00    	sub    rax,0x520
+ 8e8:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+ 8eb:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 8f1 <main+0x8f1>
+ 8f1:	83 c2 01             	add    edx,0x1
+ 8f4:	0f be c0             	movsx  eax,al
+ 8f7:	48 63 d2             	movsxd rdx,edx
+ 8fa:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ 901:	00 
+ 902:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # 909 <main+0x909>
+ 909:	89 04 11             	mov    DWORD PTR [rcx+rdx*1],eax
+                    current++;
+ 90c:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 912 <main+0x912>
+ 912:	83 c0 01             	add    eax,0x1
+ 915:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # 91b <main+0x91b>
+                    move(1);
+ 91b:	bf 01 00 00 00       	mov    edi,0x1
+ 920:	e8 00 00 00 00       	call   925 <main+0x925>
+                while(code[r][c] != '"'){
+ 925:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 92b <main+0x92b>
+ 92b:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # 931 <main+0x931>
+ 931:	48 63 d2             	movsxd rdx,edx
+ 934:	48 98                	cdqe   
+ 936:	48 c1 e0 07          	shl    rax,0x7
+ 93a:	48 01 e8             	add    rax,rbp
+ 93d:	48 01 d0             	add    rax,rdx
+ 940:	48 2d 20 05 00 00    	sub    rax,0x520
+ 946:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+ 949:	3c 22                	cmp    al,0x22
+ 94b:	0f 85 76 ff ff ff    	jne    8c7 <main+0x8c7>
+
+                }
+                break;
+ 951:	e9 36 01 00 00       	jmp    a8c <main+0xa8c>
+            case '.': //Pop y and x move the IP to (x,y)
+                if(current > 1){
+ 956:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 95c <main+0x95c>
+ 95c:	83 f8 01             	cmp    eax,0x1
+ 95f:	7e 5c                	jle    9bd <main+0x9bd>
+                    r = stack[current];
+ 961:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 967 <main+0x967>
+ 967:	48 98                	cdqe   
+ 969:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 970:	00 
+ 971:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 978 <main+0x978>
+ 978:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 97b:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # 981 <main+0x981>
+                    c = stack[current-1];
+ 981:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 987 <main+0x987>
+ 987:	83 e8 01             	sub    eax,0x1
+ 98a:	48 98                	cdqe   
+ 98c:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 993:	00 
+ 994:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 99b <main+0x99b>
+ 99b:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 99e:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # 9a4 <main+0x9a4>
+                    pop();
+ 9a4:	b8 00 00 00 00       	mov    eax,0x0
+ 9a9:	e8 00 00 00 00       	call   9ae <main+0x9ae>
+                    pop();
+ 9ae:	b8 00 00 00 00       	mov    eax,0x0
+ 9b3:	e8 00 00 00 00       	call   9b8 <main+0x9b8>
+                    break;
+ 9b8:	e9 cf 00 00 00       	jmp    a8c <main+0xa8c>
+                }
+            case '&': //Pop as number and print to stdout
+                printf("%d",stack[current]);
+ 9bd:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 9c3 <main+0x9c3>
+ 9c3:	48 98                	cdqe   
+ 9c5:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ 9cc:	00 
+ 9cd:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # 9d4 <main+0x9d4>
+ 9d4:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ 9d7:	89 c6                	mov    esi,eax
+ 9d9:	48 8d 3d 00 00 00 00 	lea    rdi,[rip+0x0]        # 9e0 <main+0x9e0>
+ 9e0:	b8 00 00 00 00       	mov    eax,0x0
+ 9e5:	e8 00 00 00 00       	call   9ea <main+0x9ea>
+                pop();
+ 9ea:	b8 00 00 00 00       	mov    eax,0x0
+ 9ef:	e8 00 00 00 00       	call   9f4 <main+0x9f4>
+                break;
+ 9f4:	e9 93 00 00 00       	jmp    a8c <main+0xa8c>
+            case '`': //Pop as character and print to stdout
+                printf("%c",stack[current]);
+ 9f9:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # 9ff <main+0x9ff>
+ 9ff:	48 98                	cdqe   
+ a01:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ a08:	00 
+ a09:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # a10 <main+0xa10>
+ a10:	8b 04 02             	mov    eax,DWORD PTR [rdx+rax*1]
+ a13:	89 c7                	mov    edi,eax
+ a15:	e8 00 00 00 00       	call   a1a <main+0xa1a>
+                pop();
+ a1a:	b8 00 00 00 00       	mov    eax,0x0
+ a1f:	e8 00 00 00 00       	call   a24 <main+0xa24>
+                break;
+ a24:	eb 66                	jmp    a8c <main+0xa8c>
+            default:
+                stack[current+1] = code[r][c]-'0';
+ a26:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # a2c <main+0xa2c>
+ a2c:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # a32 <main+0xa32>
+ a32:	48 63 d2             	movsxd rdx,edx
+ a35:	48 98                	cdqe   
+ a37:	48 c1 e0 07          	shl    rax,0x7
+ a3b:	48 01 e8             	add    rax,rbp
+ a3e:	48 01 d0             	add    rax,rdx
+ a41:	48 2d 20 05 00 00    	sub    rax,0x520
+ a47:	0f b6 00             	movzx  eax,BYTE PTR [rax]
+ a4a:	0f be c0             	movsx  eax,al
+ a4d:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # a53 <main+0xa53>
+ a53:	83 c2 01             	add    edx,0x1
+ a56:	8d 48 d0             	lea    ecx,[rax-0x30]
+ a59:	48 63 c2             	movsxd rax,edx
+ a5c:	48 8d 14 85 00 00 00 	lea    rdx,[rax*4+0x0]
+ a63:	00 
+ a64:	48 8d 05 00 00 00 00 	lea    rax,[rip+0x0]        # a6b <main+0xa6b>
+ a6b:	89 0c 02             	mov    DWORD PTR [rdx+rax*1],ecx
+                current++;
+ a6e:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # a74 <main+0xa74>
+ a74:	83 c0 01             	add    eax,0x1
+ a77:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # a7d <main+0xa7d>
+                break;
+ a7d:	eb 0d                	jmp    a8c <main+0xa8c>
+                break;
+ a7f:	90                   	nop
+ a80:	eb 0a                	jmp    a8c <main+0xa8c>
+                break;
+ a82:	90                   	nop
+ a83:	eb 07                	jmp    a8c <main+0xa8c>
+                break;
+ a85:	90                   	nop
+ a86:	eb 04                	jmp    a8c <main+0xa8c>
+                break;
+ a88:	90                   	nop
+ a89:	eb 01                	jmp    a8c <main+0xa8c>
+                break;
+ a8b:	90                   	nop
+        }
+        move(1);
+ a8c:	bf 01 00 00 00       	mov    edi,0x1
+ a91:	e8 00 00 00 00       	call   a96 <main+0xa96>
+    while(a != 0){
+ a96:	83 bd cc fa ff ff 00 	cmp    DWORD PTR [rbp-0x534],0x0
+ a9d:	0f 85 30 f6 ff ff    	jne    d3 <main+0xd3>
+ aa3:	b8 00 00 00 00       	mov    eax,0x0
+
+    }
+}
+ aa8:	48 8b 75 f8          	mov    rsi,QWORD PTR [rbp-0x8]
+ aac:	64 48 2b 34 25 28 00 	sub    rsi,QWORD PTR fs:0x28
+ ab3:	00 00 
+ ab5:	74 05                	je     abc <main+0xabc>
+ ab7:	e8 00 00 00 00       	call   abc <main+0xabc>
+ abc:	c9                   	leave  
+ abd:	c3                   	ret    
+
+0000000000000abe <move>:
+int move(int d){
+ abe:	55                   	push   rbp
+ abf:	48 89 e5             	mov    rbp,rsp
+ ac2:	89 7d fc             	mov    DWORD PTR [rbp-0x4],edi
+    switch (dir) {
+ ac5:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # acb <move+0xd>
+ acb:	83 f8 04             	cmp    eax,0x4
+ ace:	74 4e                	je     b1e <move+0x60>
+ ad0:	83 f8 04             	cmp    eax,0x4
+ ad3:	7f 59                	jg     b2e <move+0x70>
+ ad5:	83 f8 03             	cmp    eax,0x3
+ ad8:	74 33                	je     b0d <move+0x4f>
+ ada:	83 f8 03             	cmp    eax,0x3
+ add:	7f 4f                	jg     b2e <move+0x70>
+ adf:	83 f8 01             	cmp    eax,0x1
+ ae2:	74 07                	je     aeb <move+0x2d>
+ ae4:	83 f8 02             	cmp    eax,0x2
+ ae7:	74 13                	je     afc <move+0x3e>
+ ae9:	eb 43                	jmp    b2e <move+0x70>
+        case 1:
+            r--*d;
+ aeb:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # af1 <move+0x33>
+ af1:	83 e8 01             	sub    eax,0x1
+ af4:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # afa <move+0x3c>
+            break;
+ afa:	eb 32                	jmp    b2e <move+0x70>
+        case 2:
+            c++*d;
+ afc:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # b02 <move+0x44>
+ b02:	83 c0 01             	add    eax,0x1
+ b05:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # b0b <move+0x4d>
+            break;
+ b0b:	eb 21                	jmp    b2e <move+0x70>
+        case 3:
+            r++*d;
+ b0d:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # b13 <move+0x55>
+ b13:	83 c0 01             	add    eax,0x1
+ b16:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # b1c <move+0x5e>
+            break;
+ b1c:	eb 10                	jmp    b2e <move+0x70>
+        case 4:
+            c--*d;
+ b1e:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # b24 <move+0x66>
+ b24:	83 e8 01             	sub    eax,0x1
+ b27:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # b2d <move+0x6f>
+            break;
+ b2d:	90                   	nop
+        default:
+            ;
+    }
+}
+ b2e:	90                   	nop
+ b2f:	5d                   	pop    rbp
+ b30:	c3                   	ret    
+
+0000000000000b31 <pop>:
+int pop(){
+ b31:	55                   	push   rbp
+ b32:	48 89 e5             	mov    rbp,rsp
+    stack[current] = null[1];
+ b35:	8b 15 00 00 00 00    	mov    edx,DWORD PTR [rip+0x0]        # b3b <pop+0xa>
+ b3b:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # b41 <pop+0x10>
+ b41:	48 63 d2             	movsxd rdx,edx
+ b44:	48 8d 0c 95 00 00 00 	lea    rcx,[rdx*4+0x0]
+ b4b:	00 
+ b4c:	48 8d 15 00 00 00 00 	lea    rdx,[rip+0x0]        # b53 <pop+0x22>
+ b53:	89 04 11             	mov    DWORD PTR [rcx+rdx*1],eax
+    if(current!=0){current--;}
+ b56:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # b5c <pop+0x2b>
+ b5c:	85 c0                	test   eax,eax
+ b5e:	74 0f                	je     b6f <pop+0x3e>
+ b60:	8b 05 00 00 00 00    	mov    eax,DWORD PTR [rip+0x0]        # b66 <pop+0x35>
+ b66:	83 e8 01             	sub    eax,0x1
+ b69:	89 05 00 00 00 00    	mov    DWORD PTR [rip+0x0],eax        # b6f <pop+0x3e>
+}
+ b6f:	90                   	nop
+ b70:	5d                   	pop    rbp
+ b71:	c3                   	ret    
