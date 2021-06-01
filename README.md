@@ -8,13 +8,16 @@
 ```bash
   ~$ gcc aguja.c -o aguja
   ~$ chmod +x aguja
-  ~$ ./aguja test.txt
+  ~$ ./aguja program.aguja
 
   or
 
-  ~$ ./aguja test.txt debugg
+  ~$ ./aguja program.aguja debug
   ```
-
+### currently compiling with:
+  ```bash
+   gcc aguja.c -o aguja.o && gcc -O2 -S aguja.c
+  ```
 | Instruction |   Action                                                        |  
 | ----------- | --------------------------------------------------------------- |
 |    (        |   Start an infinite non-nestable loop                           |
