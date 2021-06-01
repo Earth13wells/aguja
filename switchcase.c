@@ -2,7 +2,6 @@
 #include<string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#define KMAG  "\x1B[35m"
 
 #define LSIZ 128
 #define RSIZ 10
@@ -66,6 +65,80 @@ int main(int argc, char *argv[]){
             case '\n':
                 c--;
                 break;
+            case ')': //Loop
+                if(dir = 2){
+                    while(code[r][c] != '('){
+                        c--;
+                    }
+                }
+                break;
+            case '/': //90° mirror
+                switch(dir){
+                    case 1:
+                        dir = 2;
+                    case 2:
+                        dir = 1;
+                    case 3:
+                        dir = 4;
+                    case 4:
+                        dir = 3;
+                    default:
+                        ;
+                }
+                break;
+            case '\\': //90° mirror
+                switch(dir){
+                    case 1:
+                        dir = 4;
+                    case 2:
+                        dir = 1;
+                    case 3:
+                        dir = 4;
+                    case 4:
+                        dir = 3;
+                    default:
+                        ;
+                }
+                break;
+            case '#': //180° mirror (Direction agnostic)
+                switch(dir){
+                    case 1:
+                        dir = 3;
+                    case 2:
+                        dir = 4;
+                    case 3:
+                        dir = 1;
+                    case 4:
+                        dir = 2;
+                    default:
+                        ;
+                }
+                break;
+            case '|': //180° mirror
+            switch(dir){
+                    case 2:
+                        dir = 1;
+                    case 4:
+                        dir = 3;
+                    default:
+                        ;
+                }
+                break;
+            case '_': //180° mirror
+                switch(dir){
+                    case 1:
+                        dir = 3;
+                    case 3:
+                        dir = 1;
+                    default:
+                        ;
+                }
+                break;
+            case ';': //End
+                a = 0;
+                break;
+            case ' ':
+                break;
             //
             //Logic
             //
@@ -103,14 +176,6 @@ int main(int argc, char *argv[]){
             case 'l': //Push the length of the stack onto stack
                 stack[current+1] = current;
                 current++;
-                break;
-
-            case ')': //Loop
-                if(dir = 2){
-                    while(code[r][c] != '('){
-                        c--;
-                    }
-                }
                 break;
             case '+': //Pop x,y, push x+y
                 stack[current-1] = stack[current]+stack[current-1];
@@ -153,63 +218,6 @@ int main(int argc, char *argv[]){
 
                 }
                 break;
-            case '/': //90° mirror
-                switch(dir){
-                    case 1:
-                        dir = 2;
-                    case 2:
-                        dir = 1;
-                    case 3:
-                        dir = 4;
-                    case 4:
-                        dir = 3;
-                    default:
-                        ;
-                }
-            case '\\': //90° mirror
-                switch(dir){
-                    case 1:
-                        dir = 4;
-                    case 2:
-                        dir = 1;
-                    case 3:
-                        dir = 4;
-                    case 4:
-                        dir = 3;
-                    default:
-                        ;
-                }
-            case '#': //180° mirror (Direction agnostic)
-                switch(dir){
-                    case 1:
-                        dir = 3;
-                    case 2:
-                        dir = 4;
-                    case 3:
-                        dir = 1;
-                    case 4:
-                        dir = 2;
-                    default:
-                        ;
-                }
-            case '|': //180° mirror
-            switch(dir){
-                    case 2:
-                        dir = 1;
-                    case 4:
-                        dir = 3;
-                    default:
-                        ;
-                }
-            case '_': //180° mirror
-                switch(dir){
-                    case 1:
-                        dir = 3;
-                    case 3:
-                        dir = 1;
-                    default:
-                        ;
-                }
             case '.': //Pop y and x move the IP to (x,y)
                 if(current > 1){
                     r = stack[current];
@@ -225,11 +233,6 @@ int main(int argc, char *argv[]){
             case '`': //Pop as character and print to stdout
                 printf("%c",stack[current]);
                 pop();
-                break;
-            case ';': //End
-                a = 0;
-                break;
-            case ' ':
                 break;
             default:
                 stack[current+1] = code[r][c]-'0';
