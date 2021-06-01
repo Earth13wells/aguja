@@ -64,7 +64,7 @@ int main(int argc, char *argv[]){
                 dir = 4;
                 break;
             case '\n':
-                c=-1;
+                c--;
                 break;
             //
             //Logic
@@ -94,9 +94,9 @@ int main(int argc, char *argv[]){
                 stack[current-1] = hold;
                 current --;
                 break;
-            case '@': //TODO USER INPUT
+            case '@': //USER INPUT
                 scanf(" %c", &num);
-                stack[current+1] = num-'0';
+                stack[current+1] = num;
                 current++;
                 break;
             //case 'TODO': //Reverse the stack
@@ -230,7 +230,6 @@ int main(int argc, char *argv[]){
                 a = 0;
                 break;
             case ' ':
-                sleep(.2);
                 break;
             default:
                 stack[current+1] = code[r][c]-'0';
