@@ -4,6 +4,17 @@
   
 2D Esolang (Be gentle, this was made in only a few hours)  
   
+### example usage:
+```bash
+  ~$ gcc aguja.c -o aguja
+  ~$ chmod +x aguja
+  ~$ ./aguja test.txt
+  
+  or
+  
+  ~$ ./aguja test.txt debugg
+  ```
+  
 | Instruction |   Action                                                        |  
 | ----------- | --------------------------------------------------------------- |
 |    (        |   Start an infinite non-nestable loop                           |
@@ -31,20 +42,26 @@
 |    \`       |   Pop as character and print to stdout                          |
 |    ;        |   End the program                                               |
                                             
-## Hello, Wold                               
+## Hello, Wold     
+  ```
     "!dlrow ,olleH"> `v                                
-                  ;^!?<                                    
-## Truth machine                                    
+                  ;^!?< 
+  ```
+## Truth machine    
+  ```
     @:?v(99-&)                              
        &                                      
-       ;                                  
+       ;       
+  ```
 ## While program                                   
                                                    
-## 99 bottles                                     
+## 99 bottles      
+  ```
     92+9*:& >0"llaw eht no reeb fo selttob ">:?vv                  
     |                                       ^` <v                      
     |      ;^?                     :  &: -1`+91~<                      
-                                                                
-## Cat                              
+  ```                                                            
+## Cat   
+  ```
     (@`?91+`?!);                                   
-                      
+           ```           
