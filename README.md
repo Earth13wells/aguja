@@ -5,7 +5,6 @@
 2D Esolang (Be gentle, this was made in only a few hours)  
 
 ![Alt Text](https://raw.githubusercontent.com/Earth13wells/aguja/main/code.gif)
-## output: hello, world!
 ### example usage:
 ```bash
   ~$ gcc aguja.c -o aguja
@@ -70,3 +69,6 @@
   ```
   (@`91+`);                                     
   ```           
+# warnings:
+- The stack may only hold 99 values, this is arbitrary and may be changed going forward
+- Currently no way to reverse the stack (I ran out of symbols 🤣)
