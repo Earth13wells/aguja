@@ -23,7 +23,7 @@
 | ----------- | --------------------------------------------------------------- |
 |    (        |   Start an infinite non-nestable loop                           |
 |    )        |   End the infinite non-nestable loop                            |
-|  ^>v<       |   Change direction of IP                                        |
+|    ^>v<     |   Change direction of IP                                        |
 |    !        |   Trampoline (skip next instruction)                            |
 |    ?        |   Conditional Trampoline; pop item off stack if not 0; skip     |
 |    :        |   Duplicate the top value on the stack                          |

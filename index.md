@@ -24,7 +24,7 @@
 | ----------- | --------------------------------------------------------------- |
 |    (        |   Start an infinite non-nestable loop                           |
 |    )        |   End the infinite non-nestable loop                            |
-|  ^>v<       |   Change direction of IP                                        |
+|    ^>v<     |   Change direction of IP                                        |
 |    !        |   Trampoline (skip next instruction)                            |
 |    ?        |   Conditional Trampoline; pop item off stack if not 0; skip     |
 |    :        |   Duplicate the top value on the stack                          |
@@ -45,7 +45,7 @@
 |    .        |   Pop y and x move the IP to (x,y)                              |
 |    &        |   Pop as number and print to stdout                             |
 |    \`       |   Pop as character and print to stdout                          |
-|   \\n       |   Move IP to start of row                                       |
+|    \n       |   Move IP to start of row                                       |
 |    ;        |   End the program                                               |
   ```
 ## Hello, Wold     

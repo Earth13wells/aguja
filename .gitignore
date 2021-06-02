@@ -5,6 +5,7 @@
 *.dll
 *.exe
 *.so
+*.xcf
 
 # Packages #
 ############
