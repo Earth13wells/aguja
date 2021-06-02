@@ -71,7 +71,7 @@ int main(int argc, char *argv[]){
                 c--;
                 break;
             case ')': //Loop
-                if(dir = 2){
+                if(dir == 2){
                     while(code[r][c] != '('){
                         c--;
                     }

@@ -128,19 +128,19 @@ main:
 	cmpq	$0, 16(%r12)
 	leaq	.L23(%rip), %r13
 	leaq	stack(%rip), %rbp
-	jne	.L125
+	jne	.L127
 	.p2align 4,,10
 	.p2align 3
 .L18:
-	movslq	r(%rip), %rcx
-	movslq	c(%rip), %rsi
+	movslq	r(%rip), %rsi
+	movslq	c(%rip), %rcx
 	leaq	1312(%rsp), %rbx
-	movq	%rcx, %rax
-	movq	%rsi, %rdx
+	movq	%rsi, %rax
+	movq	%rcx, %rdx
 	salq	$7, %rax
 	addq	%rbx, %rax
-	movzbl	-1296(%rsi,%rax), %esi
-	leal	-10(%rsi), %eax
+	movzbl	-1296(%rcx,%rax), %ecx
+	leal	-10(%rcx), %eax
 	cmpb	$116, %al
 	ja	.L21
 	movzbl	%al, %eax
@@ -179,7 +179,7 @@ main:
 	.long	.L49-.L23
 	.long	.L48-.L23
 	.long	.L47-.L23
-	.long	.L80-.L23
+	.long	.L82-.L23
 	.long	.L21-.L23
 	.long	.L45-.L23
 	.long	.L44-.L23
@@ -267,11 +267,11 @@ main:
 	.long	.L21-.L23
 	.long	.L24-.L23
 	.long	.L21-.L23
-	.long	.L122-.L23
+	.long	.L124-.L23
 	.section	.text.startup
 	.p2align 4,,10
 	.p2align 3
-.L126:
+.L128:
 	movl	current(%rip), %ecx
 	leal	1(%rcx), %edx
 	movslq	%edx, %rcx
@@ -287,16 +287,16 @@ main:
 	addq	%rcx, %rax
 	movsbl	-1296(%rdx,%rax), %eax
 	cmpb	$34, %al
-	jne	.L126
+	jne	.L128
 	.p2align 4,,10
 	.p2align 3
 .L45:
 	movl	$1, %edi
 	call	move
-.L129:
+.L131:
 	cmpq	$0, 16(%r12)
 	je	.L18
-.L125:
+.L127:
 	movl	$1, %edi
 	xorl	%ebx, %ebx
 	call	sleep@PLT
@@ -352,7 +352,7 @@ main:
 	call	move
 	movq	1304(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L127
+	jne	.L129
 	addq	$1312, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 48
@@ -372,18 +372,18 @@ main:
 	.cfi_restore_state
 	movslq	current(%rip), %rax
 	cmpl	$0, 0(%rbp,%rax,4)
-	je	.L128
-.L122:
+	je	.L130
+.L124:
 	xorl	%eax, %eax
 	movl	$1, %edi
 	call	pop
 	call	move
-	jmp	.L129
+	jmp	.L131
 .L30:
 	movl	dir(%rip), %eax
 	cmpl	$3, %eax
 	je	.L33
-	jg	.L55
+	jg	.L56
 	cmpl	$1, %eax
 	je	.L35
 	cmpl	$2, %eax
@@ -395,7 +395,7 @@ main:
 	movl	dir(%rip), %eax
 	cmpl	$3, %eax
 	je	.L29
-	jg	.L124
+	jg	.L126
 	cmpl	$1, %eax
 	je	.L25
 	cmpl	$2, %eax
@@ -407,7 +407,7 @@ main:
 	movl	dir(%rip), %eax
 	cmpl	$3, %eax
 	je	.L35
-	jg	.L54
+	jg	.L55
 	cmpl	$1, %eax
 	je	.L33
 	cmpl	$2, %eax
@@ -419,7 +419,7 @@ main:
 	movl	dir(%rip), %eax
 	cmpl	$2, %eax
 	je	.L35
-.L124:
+.L126:
 	cmpl	$4, %eax
 	jne	.L45
 .L33:
@@ -428,11 +428,11 @@ main:
 .L21:
 	movl	current(%rip), %eax
 	leal	1(%rax), %edx
-	movsbl	%sil, %eax
-	movslq	%edx, %rcx
+	movsbl	%cl, %eax
+	movslq	%edx, %rsi
 	subl	$48, %eax
 	movl	%edx, current(%rip)
-	movl	%eax, 0(%rbp,%rcx,4)
+	movl	%eax, 0(%rbp,%rsi,4)
 	jmp	.L45
 .L26:
 	movl	current(%rip), %edx
@@ -455,7 +455,7 @@ main:
 	cmpl	$3, %eax
 	je	.L29
 	jmp	.L45
-.L55:
+.L56:
 	cmpl	$4, %eax
 	je	.L29
 	jmp	.L45
@@ -477,9 +477,9 @@ main:
 	cltq
 	movl	0(%rbp,%rax,4), %ecx
 	cmpl	%ecx, 0(%rbp,%rdx,4)
-	je	.L130
+	je	.L132
 	movl	$0, 0(%rbp,%rax,4)
-	jmp	.L122
+	jmp	.L124
 .L37:
 	movslq	current(%rip), %rax
 	movl	0(%rbp,%rax,4), %ecx
@@ -488,14 +488,14 @@ main:
 	movl	%edx, current(%rip)
 	movl	%ecx, 0(%rbp,%rax,4)
 	jmp	.L45
-.L54:
+.L55:
 	cmpl	$4, %eax
 	je	.L25
 	jmp	.L45
 .L39:
 	movslq	current(%rip), %rax
 	cmpl	$1, %eax
-	jg	.L131
+	jg	.L133
 .L46:
 	movl	0(%rbp,%rax,4), %esi
 	leaq	.LC8(%rip), %rdi
@@ -515,12 +515,12 @@ main:
 	call	pop
 	jmp	.L45
 .L41:
-	movslq	current(%rip), %rdi
-	leal	-1(%rdi), %ecx
+	movslq	current(%rip), %rsi
+	leal	-1(%rsi), %ecx
 	movslq	%ecx, %rcx
 	movl	0(%rbp,%rcx,4), %eax
 	cltd
-	idivl	0(%rbp,%rdi,4)
+	idivl	0(%rbp,%rsi,4)
 	movl	%eax, 0(%rbp,%rcx,4)
 	xorl	%eax, %eax
 	call	pop
@@ -545,18 +545,18 @@ main:
 	call	pop
 	jmp	.L45
 .L44:
-	movl	$2, dir(%rip)
+	cmpl	$2, dir(%rip)
+	jne	.L45
+	salq	$7, %rsi
 	leal	-1(%rdx), %eax
-	salq	$7, %rcx
+	movq	%rsi, %rdx
 	cltq
-	leaq	(%r14,%rcx), %rdx
-	.p2align 4,,10
-	.p2align 3
-.L53:
+	addq	%r14, %rdx
+.L54:
 	movl	%eax, %ecx
 	subq	$1, %rax
 	cmpb	$40, 1(%rdx,%rax)
-	jne	.L53
+	jne	.L54
 	movl	%ecx, c(%rip)
 	jmp	.L45
 .L47:
@@ -589,7 +589,7 @@ main:
 	subl	$1, %edx
 	movl	%edx, c(%rip)
 	jmp	.L45
-.L131:
+.L133:
 	movslq	%eax, %rdx
 	subl	$1, %eax
 	cltq
@@ -602,19 +602,19 @@ main:
 	xorl	%eax, %eax
 	call	pop
 	jmp	.L45
-.L130:
+.L132:
 	movl	$1, 0(%rbp,%rax,4)
 	xorl	%eax, %eax
 	call	pop
 	jmp	.L45
-.L128:
+.L130:
 	movl	$1, %edi
 	call	move
-	jmp	.L122
-.L80:
+	jmp	.L124
+.L82:
 	movslq	current(%rip), %rax
 	jmp	.L46
-.L127:
+.L129:
 	call	__stack_chk_fail@PLT
 	.cfi_endproc
 .LFE22:
