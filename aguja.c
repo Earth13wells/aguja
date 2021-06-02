@@ -81,62 +81,78 @@ int main(int argc, char *argv[]){
                 switch(dir){
                     case 1:
                         dir = 2;
+                        break;
                     case 2:
                         dir = 1;
+                        break;
                     case 3:
                         dir = 4;
+                        break;
                     case 4:
                         dir = 3;
+                        break;
                     default:
-                        ;
+                        break;
                 }
                 break;
             case '\\': //90° mirror
                 switch(dir){
                     case 1:
                         dir = 4;
+                        break;
                     case 2:
-                        dir = 1;
-                    case 3:
-                        dir = 4;
-                    case 4:
                         dir = 3;
+                        break;
+                    case 3:
+                        dir = 2;
+                        break;
+                    case 4:
+                        dir = 1;
+                        break;
                     default:
-                        ;
+                        break;
                 }
                 break;
             case '#': //180° mirror (Direction agnostic)
                 switch(dir){
                     case 1:
                         dir = 3;
+                        break;
                     case 2:
                         dir = 4;
+                        break;
                     case 3:
                         dir = 1;
+                        break;
                     case 4:
                         dir = 2;
+                        break;
                     default:
-                        ;
+                        break;
                 }
                 break;
             case '|': //180° mirror
             switch(dir){
                     case 2:
-                        dir = 1;
+                        dir = 4;
+                        break;
                     case 4:
-                        dir = 3;
+                        dir = 2;
+                        break;
                     default:
-                        ;
+                        break;
                 }
                 break;
             case '_': //180° mirror
                 switch(dir){
                     case 1:
                         dir = 3;
+                        break;
                     case 3:
                         dir = 1;
+                        break;
                     default:
-                        ;
+                        break;
                 }
                 break;
             case ';': //End
