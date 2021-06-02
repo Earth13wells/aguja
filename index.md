@@ -19,6 +19,7 @@
   ```bash
    gcc aguja.c -o aguja.o && gcc -O2 -S aguja.c
   ```
+  ```
 | Instruction |   Action                                                        |  
 | ----------- | --------------------------------------------------------------- |
 |    (        |   Start an infinite non-nestable loop                           |
@@ -45,7 +46,7 @@
 |    &        |   Pop as number and print to stdout                             |
 |    \`       |   Pop as character and print to stdout                          |
 |    ;        |   End the program                                               |
-
+  ```
 ## Hello, Wold     
   ```
     "!dlrow ,olleH"> \`v                                
