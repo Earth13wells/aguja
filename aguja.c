@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
             printf("^\n");
             printf("dir: %d, d: %d \n", dir,d);
             printf("r: %d, c: %d\n", r,c);
-            printf("instruction: %c\n", code[r][c]);
+            printf("instruction: %d\n", code[r][c]);
             printf("stack: %d, current %d\n",stack[current], current);
             //printf("\033[2J\033[1;1H");\
 
@@ -68,7 +68,9 @@ int main(int argc, char *argv[]){
                 dir = 4;
                 break;
             case '\n':
-                c--;
+                if(dir == 2 || dir == 4){
+                    c = 0;
+                }
                 break;
             case ')': //Loop
                 if(dir == 2){
@@ -257,7 +259,7 @@ int main(int argc, char *argv[]){
                 printf("%c",stack[current]);
                 pop();
                 break;
-            default:
+            default: //TODO IF LENGTH OF code[r] = 0 then skip that line
                 stack[current+1] = code[r][c]-'0';
                 current++;
                 break;

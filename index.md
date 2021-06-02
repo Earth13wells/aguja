@@ -45,6 +45,7 @@
 |    .        |   Pop y and x move the IP to (x,y)                              |
 |    &        |   Pop as number and print to stdout                             |
 |    \`       |   Pop as character and print to stdout                          |
+|   \\n       |   Move IP to start of row                                       |
 |    ;        |   End the program                                               |
   ```
 ## Hello, Wold     
@@ -73,3 +74,4 @@
 # warnings:
 - The stack may only hold 99 values, this is arbitrary and may be changed going forward
 - Currently no way to reverse the stack (I ran out of symbols 🤣)
+- If IP is set after a newline stack will get messed up. Just put a space there (warning: some text editors strip these extra spaces out unless a character is placed afterwards)

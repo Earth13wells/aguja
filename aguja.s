@@ -74,7 +74,7 @@ pop:
 .LC4:
 	.string	"r: %d, c: %d\n"
 .LC5:
-	.string	"instruction: %c\n"
+	.string	"instruction: %d\n"
 .LC6:
 	.string	"stack: %d, current %d\n"
 .LC7:
@@ -383,7 +383,7 @@ main:
 	movl	dir(%rip), %eax
 	cmpl	$3, %eax
 	je	.L33
-	jg	.L56
+	jg	.L57
 	cmpl	$1, %eax
 	je	.L35
 	cmpl	$2, %eax
@@ -407,7 +407,7 @@ main:
 	movl	dir(%rip), %eax
 	cmpl	$3, %eax
 	je	.L35
-	jg	.L55
+	jg	.L56
 	cmpl	$1, %eax
 	je	.L33
 	cmpl	$2, %eax
@@ -455,7 +455,7 @@ main:
 	cmpl	$3, %eax
 	je	.L29
 	jmp	.L45
-.L56:
+.L57:
 	cmpl	$4, %eax
 	je	.L29
 	jmp	.L45
@@ -488,7 +488,7 @@ main:
 	movl	%edx, current(%rip)
 	movl	%ecx, 0(%rbp,%rax,4)
 	jmp	.L45
-.L55:
+.L56:
 	cmpl	$4, %eax
 	je	.L25
 	jmp	.L45
@@ -552,11 +552,11 @@ main:
 	movq	%rsi, %rdx
 	cltq
 	addq	%r14, %rdx
-.L54:
+.L55:
 	movl	%eax, %ecx
 	subq	$1, %rax
 	cmpb	$40, 1(%rdx,%rax)
-	jne	.L54
+	jne	.L55
 	movl	%ecx, c(%rip)
 	jmp	.L45
 .L47:
@@ -586,8 +586,11 @@ main:
 	call	move
 	jmp	.L45
 .L52:
-	subl	$1, %edx
-	movl	%edx, c(%rip)
+	movl	dir(%rip), %eax
+	subl	$2, %eax
+	andl	$-3, %eax
+	jne	.L45
+	movl	$0, c(%rip)
 	jmp	.L45
 .L133:
 	movslq	%eax, %rdx
