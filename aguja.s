@@ -88,6 +88,7 @@ pop:
 main:
 .LFB22:
 	.cfi_startproc
+	movabsq	$12884901892, %rdx
 	pushq	%r14
 	.cfi_def_cfa_offset 16
 	.cfi_offset 14, -16
@@ -104,16 +105,30 @@ main:
 	pushq	%rbx
 	.cfi_def_cfa_offset 48
 	.cfi_offset 3, -48
-	subq	$1312, %rsp
-	.cfi_def_cfa_offset 1360
+	subq	$1392, %rsp
+	.cfi_def_cfa_offset 1440
 	movq	8(%rsi), %rdi
 	leaq	.LC0(%rip), %rsi
 	movq	%fs:40, %rax
-	movq	%rax, 1304(%rsp)
-	xorl	%eax, %eax
-	leaq	16(%rsp), %r14
-	call	fopen@PLT
+	movq	%rax, 1384(%rsp)
+	movabsq	$4294967298, %rax
+	leaq	96(%rsp), %r14
+	movq	%rdx, 24(%rsp)
+	movq	%rdx, 32(%rsp)
 	movq	%r14, %rbx
+	movq	$3, 80(%rsp)
+	movq	$1, 88(%rsp)
+	movq	%rax, 16(%rsp)
+	movq	%rax, 40(%rsp)
+	movabsq	$17179869187, %rax
+	movq	%rax, 48(%rsp)
+	movabsq	$8589934593, %rax
+	movq	%rax, 56(%rsp)
+	movabsq	$17179869184, %rax
+	movq	%rax, 64(%rsp)
+	movabsq	$8589934592, %rax
+	movq	%rax, 72(%rsp)
+	call	fopen@PLT
 	movq	%rax, %rbp
 	.p2align 4,,10
 	.p2align 3
@@ -128,13 +143,13 @@ main:
 	cmpq	$0, 16(%r12)
 	leaq	.L23(%rip), %r13
 	leaq	stack(%rip), %rbp
-	jne	.L127
+	jne	.L73
 	.p2align 4,,10
 	.p2align 3
 .L18:
 	movslq	r(%rip), %rsi
 	movslq	c(%rip), %rcx
-	leaq	1312(%rsp), %rbx
+	leaq	1392(%rsp), %rbx
 	movq	%rsi, %rax
 	movq	%rcx, %rdx
 	salq	$7, %rax
@@ -179,7 +194,7 @@ main:
 	.long	.L49-.L23
 	.long	.L48-.L23
 	.long	.L47-.L23
-	.long	.L82-.L23
+	.long	.L62-.L23
 	.long	.L21-.L23
 	.long	.L45-.L23
 	.long	.L44-.L23
@@ -267,11 +282,11 @@ main:
 	.long	.L21-.L23
 	.long	.L24-.L23
 	.long	.L21-.L23
-	.long	.L124-.L23
+	.long	.L72-.L23
 	.section	.text.startup
 	.p2align 4,,10
 	.p2align 3
-.L128:
+.L74:
 	movl	current(%rip), %ecx
 	leal	1(%rcx), %edx
 	movslq	%edx, %rcx
@@ -279,7 +294,7 @@ main:
 	movl	%eax, 0(%rbp,%rcx,4)
 .L50:
 	movl	$1, %edi
-	leaq	1312(%rsp), %rcx
+	leaq	1392(%rsp), %rcx
 	call	move
 	movslq	r(%rip), %rax
 	movslq	c(%rip), %rdx
@@ -287,16 +302,16 @@ main:
 	addq	%rcx, %rax
 	movsbl	-1296(%rdx,%rax), %eax
 	cmpb	$34, %al
-	jne	.L128
+	jne	.L74
 	.p2align 4,,10
 	.p2align 3
 .L45:
 	movl	$1, %edi
 	call	move
-.L131:
+.L76:
 	cmpq	$0, 16(%r12)
 	je	.L18
-.L127:
+.L73:
 	movl	$1, %edi
 	xorl	%ebx, %ebx
 	call	sleep@PLT
@@ -333,7 +348,7 @@ main:
 	call	printf@PLT
 	movslq	r(%rip), %rax
 	movslq	c(%rip), %rdx
-	leaq	1312(%rsp), %rcx
+	leaq	1392(%rsp), %rcx
 	leaq	.LC5(%rip), %rdi
 	salq	$7, %rax
 	addq	%rcx, %rax
@@ -350,10 +365,10 @@ main:
 .L36:
 	movl	$1, %edi
 	call	move
-	movq	1304(%rsp), %rax
+	movq	1384(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L129
-	addq	$1312, %rsp
+	jne	.L75
+	addq	$1392, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 48
 	xorl	%eax, %eax
@@ -368,63 +383,22 @@ main:
 	popq	%r14
 	.cfi_def_cfa_offset 8
 	ret
-.L32:
+.L34:
 	.cfi_restore_state
-	movslq	current(%rip), %rax
-	cmpl	$0, 0(%rbp,%rax,4)
-	je	.L130
-.L124:
+	movslq	current(%rip), %rdx
+	leal	-1(%rdx), %eax
+	cltq
+	movl	0(%rbp,%rax,4), %ecx
+	cmpl	%ecx, 0(%rbp,%rdx,4)
+	sete	%dl
+	movzbl	%dl, %edx
+	movl	%edx, 0(%rbp,%rax,4)
+.L72:
 	xorl	%eax, %eax
 	movl	$1, %edi
 	call	pop
 	call	move
-	jmp	.L131
-.L30:
-	movl	dir(%rip), %eax
-	cmpl	$3, %eax
-	je	.L33
-	jg	.L57
-	cmpl	$1, %eax
-	je	.L35
-	cmpl	$2, %eax
-	jne	.L45
-.L25:
-	movl	$3, dir(%rip)
-	jmp	.L45
-.L49:
-	movl	dir(%rip), %eax
-	cmpl	$3, %eax
-	je	.L29
-	jg	.L126
-	cmpl	$1, %eax
-	je	.L25
-	cmpl	$2, %eax
-	jne	.L45
-.L35:
-	movl	$4, dir(%rip)
-	jmp	.L45
-.L38:
-	movl	dir(%rip), %eax
-	cmpl	$3, %eax
-	je	.L35
-	jg	.L56
-	cmpl	$1, %eax
-	je	.L33
-	cmpl	$2, %eax
-	jne	.L45
-.L29:
-	movl	$1, dir(%rip)
-	jmp	.L45
-.L24:
-	movl	dir(%rip), %eax
-	cmpl	$2, %eax
-	je	.L35
-.L126:
-	cmpl	$4, %eax
-	jne	.L45
-.L33:
-	movl	$2, dir(%rip)
-	jmp	.L45
+	jmp	.L76
 .L21:
 	movl	current(%rip), %eax
 	leal	1(%rax), %edx
@@ -433,6 +407,16 @@ main:
 	subl	$48, %eax
 	movl	%edx, current(%rip)
 	movl	%eax, 0(%rbp,%rsi,4)
+	jmp	.L45
+.L24:
+	movl	dir(%rip), %eax
+	subl	$1, %eax
+	cltq
+	movl	64(%rsp,%rax,4), %eax
+	movl	%eax, dir(%rip)
+	jmp	.L45
+.L25:
+	movl	$3, dir(%rip)
 	jmp	.L45
 .L26:
 	movl	current(%rip), %edx
@@ -450,14 +434,20 @@ main:
 	jmp	.L45
 .L28:
 	movl	dir(%rip), %eax
-	cmpl	$1, %eax
-	je	.L25
-	cmpl	$3, %eax
-	je	.L29
+	subl	$1, %eax
+	cltq
+	movl	80(%rsp,%rax,4), %eax
+	movl	%eax, dir(%rip)
 	jmp	.L45
-.L57:
-	cmpl	$4, %eax
-	je	.L29
+.L29:
+	movl	$1, dir(%rip)
+	jmp	.L45
+.L30:
+	movl	dir(%rip), %eax
+	subl	$1, %eax
+	cltq
+	movl	32(%rsp,%rax,4), %eax
+	movl	%eax, dir(%rip)
 	jmp	.L45
 .L31:
 	leaq	12(%rsp), %rsi
@@ -471,15 +461,19 @@ main:
 	movl	%eax, current(%rip)
 	movl	%ecx, 0(%rbp,%rdx,4)
 	jmp	.L45
-.L34:
-	movslq	current(%rip), %rdx
-	leal	-1(%rdx), %eax
-	cltq
-	movl	0(%rbp,%rax,4), %ecx
-	cmpl	%ecx, 0(%rbp,%rdx,4)
-	je	.L132
-	movl	$0, 0(%rbp,%rax,4)
-	jmp	.L124
+.L32:
+	movslq	current(%rip), %rax
+	cmpl	$0, 0(%rbp,%rax,4)
+	jne	.L72
+	movl	$1, %edi
+	call	move
+	jmp	.L72
+.L33:
+	movl	$2, dir(%rip)
+	jmp	.L45
+.L35:
+	movl	$4, dir(%rip)
+	jmp	.L45
 .L37:
 	movslq	current(%rip), %rax
 	movl	0(%rbp,%rax,4), %ecx
@@ -488,14 +482,17 @@ main:
 	movl	%edx, current(%rip)
 	movl	%ecx, 0(%rbp,%rax,4)
 	jmp	.L45
-.L56:
-	cmpl	$4, %eax
-	je	.L25
+.L38:
+	movl	dir(%rip), %eax
+	subl	$1, %eax
+	cltq
+	movl	16(%rsp,%rax,4), %eax
+	movl	%eax, dir(%rip)
 	jmp	.L45
 .L39:
 	movslq	current(%rip), %rax
 	cmpl	$1, %eax
-	jg	.L133
+	jg	.L77
 .L46:
 	movl	0(%rbp,%rax,4), %esi
 	leaq	.LC8(%rip), %rdi
@@ -581,6 +578,13 @@ main:
 	movl	%edi, 0(%rbp,%rcx,4)
 	movl	%esi, 0(%rbp,%rdx,4)
 	jmp	.L45
+.L49:
+	movl	dir(%rip), %eax
+	subl	$1, %eax
+	cltq
+	movl	48(%rsp,%rax,4), %eax
+	movl	%eax, dir(%rip)
+	jmp	.L45
 .L51:
 	movl	$1, %edi
 	call	move
@@ -592,7 +596,7 @@ main:
 	jne	.L45
 	movl	$0, c(%rip)
 	jmp	.L45
-.L133:
+.L77:
 	movslq	%eax, %rdx
 	subl	$1, %eax
 	cltq
@@ -605,19 +609,10 @@ main:
 	xorl	%eax, %eax
 	call	pop
 	jmp	.L45
-.L132:
-	movl	$1, 0(%rbp,%rax,4)
-	xorl	%eax, %eax
-	call	pop
-	jmp	.L45
-.L130:
-	movl	$1, %edi
-	call	move
-	jmp	.L124
-.L82:
+.L62:
 	movslq	current(%rip), %rax
 	jmp	.L46
-.L129:
+.L75:
 	call	__stack_chk_fail@PLT
 	.cfi_endproc
 .LFE22:
@@ -663,8 +658,8 @@ null:
 	.globl	stack
 	.align 32
 	.type	stack, @object
-	.size	stack, 4000
+	.size	stack, 396
 stack:
-	.zero	4000
+	.zero	396
 	.ident	"GCC: (GNU) 10.2.0"
 	.section	.note.GNU-stack,"",@progbits

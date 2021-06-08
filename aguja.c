@@ -2,11 +2,11 @@
 #include<string.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+//TODO REMOVE UNUSED LIBS.
 #define LSIZ 128
 #define RSIZ 10
 
-int stack[1000];  //used to store data during runtime
+int stack[99];   //used to store data during runtime
 int null[1];     //used to unset stack elements
 int current = 0; //Current element in the stack
 
@@ -22,12 +22,13 @@ int main(int argc, char *argv[]){
 
 //GETTING THE FILE
     char code[RSIZ][LSIZ];
-    char fname[20] = "text.one";
     FILE *fptr = NULL;
     int tot = 0;
     int hold;
     int i = 0;
     int num;
+    int mirror[5][4]={{2,1,4,3},{4,3,2,1},{3,4,1,2},{0,4,0,2},{3,0,1,0}};
+
 
     fptr = fopen(argv[1], "r");
     while(fgets(code[i], LSIZ, fptr)){
@@ -80,82 +81,19 @@ int main(int argc, char *argv[]){
                 }
                 break;
             case '/': //90° mirror
-                switch(dir){
-                    case 1:
-                        dir = 2;
-                        break;
-                    case 2:
-                        dir = 1;
-                        break;
-                    case 3:
-                        dir = 4;
-                        break;
-                    case 4:
-                        dir = 3;
-                        break;
-                    default:
-                        break;
-                }
+                dir = mirror[0][dir-1];
                 break;
             case '\\': //90° mirror
-                switch(dir){
-                    case 1:
-                        dir = 4;
-                        break;
-                    case 2:
-                        dir = 3;
-                        break;
-                    case 3:
-                        dir = 2;
-                        break;
-                    case 4:
-                        dir = 1;
-                        break;
-                    default:
-                        break;
-                }
+                dir = mirror[1][dir-1];
                 break;
             case '#': //180° mirror (Direction agnostic)
-                switch(dir){
-                    case 1:
-                        dir = 3;
-                        break;
-                    case 2:
-                        dir = 4;
-                        break;
-                    case 3:
-                        dir = 1;
-                        break;
-                    case 4:
-                        dir = 2;
-                        break;
-                    default:
-                        break;
-                }
+                dir = mirror[2][dir-1];
                 break;
             case '|': //180° mirror
-            switch(dir){
-                    case 2:
-                        dir = 4;
-                        break;
-                    case 4:
-                        dir = 2;
-                        break;
-                    default:
-                        break;
-                }
+                dir = mirror[3][dir-1];
                 break;
             case '_': //180° mirror
-                switch(dir){
-                    case 1:
-                        dir = 3;
-                        break;
-                    case 3:
-                        dir = 1;
-                        break;
-                    default:
-                        break;
-                }
+                dir = mirror[4][dir-1];
                 break;
             case ';': //End
                 a = 0;
@@ -223,14 +161,8 @@ int main(int argc, char *argv[]){
                 pop();
                 break;
             case '=': //Pop x,y push 1 if true, else 0
-                if(stack[current] == stack[current-1]){
-                    stack[current-1] = 1;
-                    pop();
-                }
-                else if(stack[current] != stack[current-1]){
-                    stack[current-1] = 0;
-                    pop();
-                }
+                stack[current-1] = stack[current] == stack[current-1] ? 1 : 0;
+                pop();
                 break;
             case '"': //Pushes every character found to the stack until closed
             //    c++;

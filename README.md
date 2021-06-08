@@ -2,7 +2,7 @@
 
 # AGUJA  
 
-2D Esolang (Be gentle, this was made in only a few hours)  
+2D Esolang  
 
 ![Alt Text](https://raw.githubusercontent.com/Earth13wells/aguja/main/code.gif)
 ### example usage:
@@ -74,3 +74,6 @@
 - The stack may only hold 99 values, this is arbitrary and may be changed going forward
 - Currently no way to reverse the stack (I ran out of symbols 🤣)
 - If IP is set after a newline stack will get messed up. Just put a space there (warning: some text editors strip these extra spaces out unless a character is placed afterwards)
+- Code lines can only be 128 characters long (for now)
+- Code will loop if going right and hits a newline 👍 But no other directions. (on the TODO list)
+- 

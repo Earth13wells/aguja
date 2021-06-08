@@ -2,7 +2,7 @@
 
 # AGUJA  
 
-2D Esolang (Be gentle, this was made in only a few hours)  
+2D Esolang  
 
 ![Alt Text](https://raw.githubusercontent.com/Earth13wells/aguja/main/code.gif)
 ### example usage:
