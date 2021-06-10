@@ -1,3 +1,9 @@
+/*------------------------------|
+|   This code was written by:   |
+|         Earth13Wells          |
+| github.com/Earth13Wells/Aguja |
+|------------------------------*/
+
 #include<stdio.h>
 #include<string.h>
 #include <unistd.h>
@@ -25,14 +31,19 @@ int main(int argc, char *argv[]){
     FILE *fptr = NULL;
     int tot = 0;
     int hold;
-    int i = 0;
+    int lines = 0;
     int num;
-    int mirror[5][4]={{2,1,4,3},{4,3,2,1},{3,4,1,2},{0,4,0,2},{3,0,1,0}};
+    int mirror[5][4]=
+       {{2,1,4,3},
+        {4,3,2,1},
+        {3,4,1,2},
+        {0,4,0,2},
+        {3,0,1,0}};
 
 
     fptr = fopen(argv[1], "r");
-    while(fgets(code[i], LSIZ, fptr)){
-        i++;
+    while(fgets(code[lines], LSIZ, fptr)){
+        lines++;
     }
     //printf("%s\n", code[0]);
     int a = 1;
@@ -52,6 +63,14 @@ int main(int argc, char *argv[]){
             //printf("\033[2J\033[1;1H");\
 
         }
+        if(c == -1){
+            while(code[r][c] != '\n'){
+                c++;
+            }
+        }
+        if(r == lines){
+            r = 0;
+        }
         switch(code[r][c]){
             //
             //Flow Controll
@@ -69,7 +88,7 @@ int main(int argc, char *argv[]){
                 dir = 4;
                 break;
             case '\n':
-                if(dir == 2 || dir == 4){
+                if(dir == 2){
                     c = 0;
                 }
                 break;
@@ -197,7 +216,10 @@ int main(int argc, char *argv[]){
                 break;
         }
         move(1);
-
+        if(dir == 1 && r == -1){
+            r = lines-1;
+            //pop();
+        }
     }
 }
 int move(int d){
