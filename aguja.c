@@ -34,11 +34,13 @@ int main(int argc, char *argv[]){
     int lines = 0;
     int num;
     int mirror[5][4]=
-       {{2,1,4,3},
+    {
+        {2,1,4,3},
         {4,3,2,1},
         {3,4,1,2},
         {0,4,0,2},
-        {3,0,1,0}};
+        {3,0,1,0}
+    };
 
 
     fptr = fopen(argv[1], "r");
@@ -47,7 +49,9 @@ int main(int argc, char *argv[]){
     }
     //printf("%s\n", code[0]);
     int a = 1;
+    int b;
     int p = 0;
+    int reverse[99];
     while(a != 0){
         if(argv[2]){
             sleep(1);
@@ -89,7 +93,7 @@ int main(int argc, char *argv[]){
                 break;
             case '\n':
                 if(dir == 2){
-                    c = 0;
+                    c = -1;
                 }
                 break;
             case ')': //Loop
@@ -151,10 +155,26 @@ int main(int argc, char *argv[]){
                 break;
             case '@': //USER INPUT
                 scanf(" %c", &num);
-                stack[current+1] = num;
+                if(num-'0' <= 10){
+                    stack[current+1] = num-48;
+                }
+                else if(num-'A' <= 26){
+                    stack[current+1] = num-55;
+                }
+                else{
+                    stack[current+1] = num-61;
+                }
                 current++;
                 break;
             //case 'TODO': //Reverse the stack
+            case '[':
+                for(b = 0; b <= current; b++ ){
+                    reverse[b] = stack[current-b];
+                }
+                for(b = 0; b <= current; b++ ){
+                    stack[b] = reverse[b];
+                }
+                break;
             case 'l': //Push the length of the stack onto stack
                 stack[current+1] = current;
                 current++;
@@ -210,8 +230,16 @@ int main(int argc, char *argv[]){
                 printf("%c",stack[current]);
                 pop();
                 break;
-            default: //TODO IF LENGTH OF code[r] = 0 then skip that line
-                stack[current+1] = code[r][c]-'0';
+            default:
+                if(code[r][c]-48 <= 10){
+                    stack[current+1] = code[r][c]-48;
+                }
+                else if(code[r][c]-64 <= 26){
+                    stack[current+1] = code[r][c]-55;
+                }
+                else{
+                    stack[current+1] = code[r][c]-61;
+                }
                 current++;
                 break;
         }
