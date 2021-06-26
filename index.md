@@ -22,9 +22,9 @@
   ```
 | Instruction |   Action                                                        |  
 | ----------- | --------------------------------------------------------------- |
-|   0-9       |   Push the value 0-9 to the stack                               |
-|   A-Z       |   Push the value 10-35 to the stack                             |
-|   a-z       |   Push the value 36-61 to the stack                             |
+|   0-9       |   Push the value 0-9 to the stack         ┐                     |
+|   A-Z       |   Push the value 10-35 to the stack       |regular input        |
+|   a-z       |   Push the value 36-61 to the stack       ┘                     |
 |    (        |   Start an infinite non-nestable loop                           |
 |    )        |   End the infinite non-nestable loop                            |
 |    ^>v<     |   Change direction of IP                                        |
@@ -33,8 +33,9 @@
 |    :        |   Duplicate the top value on the stack                          |
 |    ~        |   Remove the top value from the stack                           |
 |    $        |   Swap the top two values on the stack                          |
-|    [        |   Reverse all values on the stack                               |
-|    @        |   Push user input to top of stack                               |
+|    @        |   Reverse all values on the stack                               |
+|    [        |   Push user input to top of stack as ascii value                |
+|    ]        |   Push user input to top of stack as regular                    |
 |    l        |   Push the length of the stack onto stack                       |
 |    \+       |    Pop x,y, push x+y                                            |
 |    \-       |    Pop x,y, push x-y                                            |
@@ -59,7 +60,7 @@
   ```
 ## Truth machine    
   ```
-    @:?v(99-&)                              
+    [:?v(99-&)                              
        &                                      
        ;       
   ```
@@ -73,7 +74,7 @@
   ```                                                            
 ## Cat   
   ```
-  (@`A`);                                     
+  ([`A`);                                     
   ```           
 # warnings:
 - The stack may only hold 99 values, this is arbitrary and may be changed going forward

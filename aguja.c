@@ -14,7 +14,7 @@
 
 int stack[99];   //used to store data during runtime
 int null[1];     //used to unset stack elements
-int current = 0; //Current element in the stack
+int current = -1; //Current element in the stack
 
 int c = 0;   //stores the current IP column
 int r = 0;   //stores the current IP row
@@ -153,37 +153,33 @@ int main(int argc, char *argv[]){
                 stack[current-1] = hold;
                 current --;
                 break;
-            case '@': //USER INPUT AS CHAR
+            case '[': //USER INPUT AS CHAR
                 /*
                     Fun Fact: if the user inputs
                         multiple charecters, running
                         '@' again will grab the next
                         character
                 */
-                // if(num-'0' <= 10){
-                //     stack[current+1] = num-48;
-                // }
-                // else if(num-'A' <= 26){
-                //     stack[current+1] = num-55;
-                // }
-                // else{
-                //     stack[current+1] = num-61;
-                // }
-                /*
-                    Since I'm writing a book here anyway;
-                    the commented code (above) is to take
-                    the user input as its number
-                    0-9(0-9)A-Z(10-35)a-z(36-61)
-                    I have yet to decide how I want to do user input.
-                */
                 scanf(" %c", &num);
                 stack[current+1] = num;
                 current++;
                 break;
-            case '[':
+            case ']':
+                scanf(" %c", &num);
+                if(num-'0' <= 10){
+                    stack[current+1] = num-48;
+                }
+                else if(num-'A' <= 26){
+                    stack[current+1] = num-55;
+                }
+                else{
+                    stack[current+1] = num-61;
+                }
+                current++;
+                break;
+            case '@':
                 for(b = 0; b <= current; b++ ){
                     reverse[b] = stack[current-b];
-                    printf("%d\n",reverse[b]);
                 }
                 for(b = 0; b <= current; b++ ){
                     stack[b] = reverse[b];
@@ -217,8 +213,7 @@ int main(int argc, char *argv[]){
                 stack[current-1] = stack[current] == stack[current-1] ? 1 : 0;
                 pop();
                 break;
-            case '"': //Pushes every character found to the stack until closed
-            //    c++;
+            case '"': //Pushes every character found to the stack until closed (ascii value)
                 move(1);
                 while(code[r][c] != '"'){
                     //printf("%c",code[r][c]);
