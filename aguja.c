@@ -18,7 +18,6 @@ int current = 0; //Current element in the stack
 
 int c = 0;   //stores the current IP column
 int r = 0;   //stores the current IP row
-int d = 1;   //used to modify the dir var +/-
 int dir = 2; //used to conroll the current direction of IP
 
 int move(int dir);
@@ -35,11 +34,11 @@ int main(int argc, char *argv[]){
     int num;
     int mirror[5][4]=
     {
-        {2,1,4,3},
-        {4,3,2,1},
-        {3,4,1,2},
-        {0,4,0,2},
-        {3,0,1,0}
+        {2,1,4,3}, // "/"
+        {4,3,2,1}, // "\"
+        {3,4,1,2}, // "#"
+        {1,4,2,2}, // "|"
+        {3,2,1,4}  // "_"
     };
 
 
@@ -60,7 +59,7 @@ int main(int argc, char *argv[]){
                 printf(" ");
             }
             printf("^\n");
-            printf("dir: %d, d: %d \n", dir,d);
+            printf("dir: %d \n", dir);
             printf("r: %d, c: %d\n", r,c);
             printf("instruction: %d\n", code[r][c]);
             printf("stack: %d, current %d\n",stack[current], current);
@@ -76,9 +75,9 @@ int main(int argc, char *argv[]){
             r = 0;
         }
         switch(code[r][c]){
-            //
-            //Flow Controll
-            //
+//╔═╗┬  >─v┬ ┬  ╔═╗/─\┌┐┌┌┬┐┬─┐v─\┬
+//╠╣ │  │ ││││  ║  │ ││││ │ ├┬┘│ ││
+//╚  ┴─┘^─<└┴┘  ╚═╝\─/┘└┘ ┴ ┴└─\─^┴─┘
             case '^':
                 dir = 1;
                 break;
@@ -121,13 +120,14 @@ int main(int argc, char *argv[]){
             case ';': //End
                 a = 0;
                 break;
-            case ' ': //just to stop these from being pushed to stack
+            //the next 4 lines are to stop "" and "(" from being pushed to stack
+            case ' ':
                 break;
             case '(':
                 break;
-            //
-            //Logic
-            //
+//╦  ┌─┐┌─┐┬┌─┐
+//║  │?││ ┬!│
+//╩═╝└─┘└─┘┴└─┘
             case '!': //Trampoline
                 move(1);
                 break;
@@ -137,9 +137,9 @@ int main(int argc, char *argv[]){
                 }
                 pop();
                 break;
-            //
-            //Stack Manipulation
-            //
+//╔═╗┌┬┐┌─┐┌─┐┬┌─  ╔╦╗┌─┐ ┌┐┌ ┬ ┌─┐┬ ┬┬  ┌─┐┌┬┐┬┌─┐┌┐┌
+//╚═╗ : ├~┤|  ├┴┐  ║$║├@┤ │[│ l +─┘| ││  ├%┤ │ ││.││││
+//╚═╝ ┴ ┴ ┴└─┘┴ ┴  ╩ ╩┴ ┴ ┘└┘ ┴ ┴  └─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘
             case ':': //Duplicate the top value on the stack.
                 stack[current+1] = stack[current];
                 current++;
@@ -153,23 +153,37 @@ int main(int argc, char *argv[]){
                 stack[current-1] = hold;
                 current --;
                 break;
-            case '@': //USER INPUT
+            case '@': //USER INPUT AS CHAR
+                /*
+                    Fun Fact: if the user inputs
+                        multiple charecters, running
+                        '@' again will grab the next
+                        character
+                */
+                // if(num-'0' <= 10){
+                //     stack[current+1] = num-48;
+                // }
+                // else if(num-'A' <= 26){
+                //     stack[current+1] = num-55;
+                // }
+                // else{
+                //     stack[current+1] = num-61;
+                // }
+                /*
+                    Since I'm writing a book here anyway;
+                    the commented code (above) is to take
+                    the user input as its number
+                    0-9(0-9)A-Z(10-35)a-z(36-61)
+                    I have yet to decide how I want to do user input.
+                */
                 scanf(" %c", &num);
-                if(num-'0' <= 10){
-                    stack[current+1] = num-48;
-                }
-                else if(num-'A' <= 26){
-                    stack[current+1] = num-55;
-                }
-                else{
-                    stack[current+1] = num-61;
-                }
+                stack[current+1] = num;
                 current++;
                 break;
-            //case 'TODO': //Reverse the stack
             case '[':
                 for(b = 0; b <= current; b++ ){
                     reverse[b] = stack[current-b];
+                    printf("%d\n",reverse[b]);
                 }
                 for(b = 0; b <= current; b++ ){
                     stack[b] = reverse[b];
@@ -230,14 +244,14 @@ int main(int argc, char *argv[]){
                 printf("%c",stack[current]);
                 pop();
                 break;
-            default:
-                if(code[r][c]-48 <= 10){
+            default: //push the charecters value to the stack
+                if(code[r][c]-48 <= 10){ //0-9(0-9)
                     stack[current+1] = code[r][c]-48;
                 }
-                else if(code[r][c]-64 <= 26){
+                else if(code[r][c]-64 <= 26){ //A-Z(10-35)
                     stack[current+1] = code[r][c]-55;
                 }
-                else{
+                else{ //a-z(36-61)
                     stack[current+1] = code[r][c]-61;
                 }
                 current++;
@@ -253,16 +267,16 @@ int main(int argc, char *argv[]){
 int move(int d){
     switch (dir) {
         case 1:
-            r--*d;
+            r--;
             break;
         case 2:
-            c++*d;
+            c++;
             break;
         case 3:
-            r++*d;
+            r++;
             break;
         case 4:
-            c--*d;
+            c--;
             break;
         default:
             ;

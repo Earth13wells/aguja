@@ -70,7 +70,7 @@ pop:
 .LC2:
 	.string	"^"
 .LC3:
-	.string	"dir: %d, d: %d \n"
+	.string	"dir: %d \n"
 .LC4:
 	.string	"r: %d, c: %d\n"
 .LC5:
@@ -80,6 +80,8 @@ pop:
 .LC7:
 	.string	" %c"
 .LC8:
+	.string	"%d\n"
+.LC9:
 	.string	"%d"
 	.section	.text.startup,"ax",@progbits
 	.p2align 4
@@ -109,28 +111,29 @@ main:
 	pushq	%rbx
 	.cfi_def_cfa_offset 56
 	.cfi_offset 3, -56
-	subq	$1800, %rsp
-	.cfi_def_cfa_offset 1856
+	movabsq	$8589934594, %rbx
+	subq	$1816, %rsp
+	.cfi_def_cfa_offset 1872
 	movq	8(%rsi), %rdi
 	leaq	.LC0(%rip), %rsi
 	movq	%fs:40, %rax
-	movq	%rax, 1784(%rsp)
+	movq	%rax, 1800(%rsp)
 	movabsq	$4294967298, %rax
-	movq	%rdx, 24(%rsp)
-	leaq	496(%rsp), %rbp
-	movq	%rdx, 32(%rsp)
-	movq	$3, 80(%rsp)
-	movq	$1, 88(%rsp)
-	movq	%rax, 16(%rsp)
-	movq	%rax, 40(%rsp)
-	movabsq	$17179869187, %rax
-	movq	%rax, 48(%rsp)
-	movabsq	$8589934593, %rax
+	movq	%rbx, 88(%rsp)
+	addq	$1, %rbx
+	leaq	512(%rsp), %rbp
+	movq	%rdx, 40(%rsp)
+	movq	%rdx, 48(%rsp)
+	movq	%rbx, 96(%rsp)
+	movq	%rax, 32(%rsp)
 	movq	%rax, 56(%rsp)
-	movabsq	$17179869184, %rax
+	movabsq	$17179869187, %rax
 	movq	%rax, 64(%rsp)
-	movabsq	$8589934592, %rax
+	movabsq	$8589934593, %rax
 	movq	%rax, 72(%rsp)
+	movabsq	$17179869185, %rax
+	movq	%rax, 80(%rsp)
+	movq	%rax, 104(%rsp)
 	call	fopen@PLT
 	movq	%rax, %r14
 	.p2align 4,,10
@@ -146,25 +149,27 @@ main:
 	call	fgets@PLT
 	testq	%rax, %rax
 	jne	.L17
+	leaq	112(%rsp), %rax
 	leaq	.L28(%rip), %r13
+	movq	%rax, 8(%rsp)
 	leaq	.LC1(%rip), %r15
 	.p2align 4,,10
 	.p2align 3
 .L77:
 	cmpq	$0, 16(%r12)
-	jne	.L100
+	jne	.L104
 .L18:
 	movl	c(%rip), %esi
 	movslq	r(%rip), %rax
 	cmpl	$-1, %esi
-	je	.L101
+	je	.L105
 	cmpl	%eax, %ebx
 	je	.L80
 .L25:
 	movq	%rax, %rdx
 	movslq	%esi, %rcx
 	salq	$7, %rdx
-	leaq	1792(%rdx), %rdi
+	leaq	1808(%rdx), %rdi
 	leaq	(%rsp,%rdi), %rdx
 	movzbl	-1296(%rcx,%rdx), %ecx
 	leal	-10(%rcx), %edx
@@ -206,7 +211,7 @@ main:
 	.long	.L55-.L28
 	.long	.L54-.L28
 	.long	.L53-.L28
-	.long	.L84-.L28
+	.long	.L86-.L28
 	.long	.L26-.L28
 	.long	.L51-.L28
 	.long	.L50-.L28
@@ -294,19 +299,14 @@ main:
 	.long	.L26-.L28
 	.long	.L29-.L28
 	.long	.L26-.L28
-	.long	.L99-.L28
+	.long	.L103-.L28
 	.section	.text.startup
-.L40:
-	movslq	current(%rip), %rdx
-	leaq	stack(%rip), %r8
-	leal	-1(%rdx), %eax
-	cltq
-	movl	(%r8,%rax,4), %ecx
-	cmpl	%ecx, (%r8,%rdx,4)
-	sete	%dl
-	movzbl	%dl, %edx
-	movl	%edx, (%r8,%rax,4)
-.L99:
+.L32:
+	movslq	current(%rip), %rax
+	leaq	stack(%rip), %r14
+	movl	(%r14,%rax,4), %edi
+	call	putchar@PLT
+.L103:
 	xorl	%eax, %eax
 	call	pop
 	.p2align 4,,10
@@ -323,10 +323,10 @@ main:
 	jmp	.L77
 	.p2align 4,,10
 	.p2align 3
-.L101:
+.L105:
 	movslq	%eax, %rcx
 	salq	$7, %rcx
-	cmpb	$10, 495(%rsp,%rcx)
+	cmpb	$10, 511(%rsp,%rcx)
 	je	.L22
 	addq	%rbp, %rcx
 	xorl	%edx, %edx
@@ -348,7 +348,7 @@ main:
 	jmp	.L25
 	.p2align 4,,10
 	.p2align 3
-.L100:
+.L104:
 	movl	$1, %edi
 	xorl	%r14d, %r14d
 	call	sleep@PLT
@@ -372,11 +372,11 @@ main:
 	jge	.L19
 .L20:
 	leaq	.LC2(%rip), %rdi
+	leaq	stack(%rip), %r14
 	call	puts@PLT
-	movl	d(%rip), %edx
 	movl	dir(%rip), %esi
-	xorl	%eax, %eax
 	leaq	.LC3(%rip), %rdi
+	xorl	%eax, %eax
 	call	printf@PLT
 	movl	c(%rip), %edx
 	movl	r(%rip), %esi
@@ -387,15 +387,14 @@ main:
 	movslq	c(%rip), %rdx
 	leaq	.LC5(%rip), %rdi
 	salq	$7, %rax
-	addq	$1792, %rax
+	addq	$1808, %rax
 	addq	%rsp, %rax
 	movsbl	-1296(%rdx,%rax), %esi
 	xorl	%eax, %eax
 	call	printf@PLT
 	movslq	current(%rip), %rax
-	leaq	stack(%rip), %r8
 	leaq	.LC6(%rip), %rdi
-	movl	(%r8,%rax,4), %esi
+	movl	(%r14,%rax,4), %esi
 	movq	%rax, %rdx
 	xorl	%eax, %eax
 	call	printf@PLT
@@ -412,16 +411,16 @@ main:
 	jg	.L71
 	leal	-55(%rsi), %edx
 .L71:
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	movslq	%eax, %rcx
-	movl	%edx, (%r8,%rcx,4)
+	movl	%edx, (%r14,%rcx,4)
 	movl	%eax, current(%rip)
 	jmp	.L51
 .L29:
 	movl	dir(%rip), %eax
 	subl	$1, %eax
 	cltq
-	movl	64(%rsp,%rax,4), %eax
+	movl	80(%rsp,%rax,4), %eax
 	movl	%eax, dir(%rip)
 	jmp	.L51
 .L30:
@@ -429,25 +428,17 @@ main:
 	jmp	.L51
 .L31:
 	movl	current(%rip), %edx
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	leal	1(%rdx), %eax
 	movslq	%eax, %rcx
-	movl	%edx, (%r8,%rcx,4)
+	movl	%edx, (%r14,%rcx,4)
 	movl	%eax, current(%rip)
-	jmp	.L51
-.L32:
-	movslq	current(%rip), %rax
-	leaq	stack(%rip), %r8
-	movl	(%r8,%rax,4), %edi
-	call	putchar@PLT
-	xorl	%eax, %eax
-	call	pop
 	jmp	.L51
 .L33:
 	movl	dir(%rip), %eax
 	subl	$1, %eax
 	cltq
-	movl	80(%rsp,%rax,4), %eax
+	movl	96(%rsp,%rax,4), %eax
 	movl	%eax, dir(%rip)
 	jmp	.L51
 .L34:
@@ -457,62 +448,83 @@ main:
 	movl	dir(%rip), %eax
 	subl	$1, %eax
 	cltq
-	movl	32(%rsp,%rax,4), %eax
+	movl	48(%rsp,%rax,4), %eax
 	movl	%eax, dir(%rip)
 	jmp	.L51
 .L36:
 	movl	current(%rip), %eax
+	xorl	%edx, %edx
+	leaq	stack(%rip), %r14
 	testl	%eax, %eax
 	js	.L51
-	leaq	stack(%rip), %r8
-	movslq	%eax, %rdi
-	leaq	96(%rsp), %r9
-	leaq	(%r8,%rdi,4), %rax
-	movq	%r9, %rdx
-	leaq	-4(%r8), %rsi
 	.p2align 4,,10
 	.p2align 3
-.L68:
-	movl	(%rax), %ecx
-	subq	$4, %rax
-	addq	$4, %rdx
-	movl	%ecx, -4(%rdx)
-	cmpq	%rax, %rsi
-	jne	.L68
-	leaq	4(,%rdi,4), %rdx
-	movq	%r9, %rsi
-	movq	%r8, %rdi
-	call	memcpy@PLT
+.L59:
+	subl	%edx, %eax
+	leaq	.LC8(%rip), %rdi
+	movq	%rdx, (%rsp)
+	cltq
+	movl	(%r14,%rax,4), %esi
+	movq	8(%rsp), %rax
+	movl	%esi, (%rax,%rdx,4)
+	xorl	%eax, %eax
+	call	printf@PLT
+	movq	(%rsp), %rdx
+	movl	current(%rip), %eax
+	addq	$1, %rdx
+	cmpl	%edx, %eax
+	jge	.L59
+	testl	%eax, %eax
+	js	.L51
+	addl	$1, %eax
+	movq	8(%rsp), %rsi
+	leaq	stack(%rip), %rdi
+	cltq
+	salq	$2, %rax
+	cmpl	$8, %eax
+	jnb	.L106
+.L65:
+	testb	$4, %al
+	je	.L51
+	movl	(%rsi), %eax
+	movl	%eax, (%rdi)
 	jmp	.L51
 .L37:
-	leaq	12(%rsp), %rsi
+	leaq	28(%rsp), %rsi
 	leaq	.LC7(%rip), %rdi
 	xorl	%eax, %eax
 	call	__isoc99_scanf@PLT
-	movl	12(%rsp), %eax
-	cmpl	$58, %eax
-	jle	.L102
-	movl	current(%rip), %ecx
-	leaq	stack(%rip), %r8
-	leal	1(%rcx), %edx
-	movslq	%edx, %rdx
-	cmpl	$91, %eax
-	jg	.L67
-	subl	$55, %eax
-	movl	%eax, (%r8,%rdx,4)
-.L66:
-	addl	$1, current(%rip)
+	movl	current(%rip), %eax
+	movl	28(%rsp), %ecx
+	leaq	stack(%rip), %r14
+	addl	$1, %eax
+	movslq	%eax, %rdx
+	movl	%eax, current(%rip)
+	movl	%ecx, (%r14,%rdx,4)
 	jmp	.L51
 .L38:
 	movslq	current(%rip), %rax
-	leaq	stack(%rip), %r8
-	cmpl	$0, (%r8,%rax,4)
-	jne	.L99
+	leaq	stack(%rip), %r14
+	cmpl	$0, (%r14,%rax,4)
+	jne	.L103
 	movl	$1, %edi
 	call	move
-	jmp	.L99
+	jmp	.L103
 .L39:
 	movl	$2, dir(%rip)
+	jmp	.L51
+.L40:
+	movslq	current(%rip), %rdx
+	leaq	stack(%rip), %r14
+	leal	-1(%rdx), %eax
+	cltq
+	movl	(%r14,%rax,4), %ecx
+	cmpl	%ecx, (%r14,%rdx,4)
+	sete	%dl
+	movzbl	%dl, %edx
+	movl	%edx, (%r14,%rax,4)
+	xorl	%eax, %eax
+	call	pop
 	jmp	.L51
 .L41:
 	movl	$4, dir(%rip)
@@ -521,12 +533,12 @@ main:
 	movl	$1, %edi
 	call	move
 	cmpl	$1, dir(%rip)
-	je	.L103
+	je	.L107
 .L76:
-	movq	1784(%rsp), %rax
+	movq	1800(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L104
-	addq	$1800, %rsp
+	jne	.L108
+	addq	$1816, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 56
 	xorl	%eax, %eax
@@ -546,28 +558,28 @@ main:
 .L43:
 	.cfi_restore_state
 	movslq	current(%rip), %rax
-	leaq	stack(%rip), %r8
-	movl	(%r8,%rax,4), %ecx
+	leaq	stack(%rip), %r14
+	movl	(%r14,%rax,4), %ecx
 	leal	1(%rax), %edx
 	movslq	%edx, %rax
 	movl	%edx, current(%rip)
-	movl	%ecx, (%r8,%rax,4)
+	movl	%ecx, (%r14,%rax,4)
 	jmp	.L51
 .L44:
 	movl	dir(%rip), %eax
 	subl	$1, %eax
 	cltq
-	movl	16(%rsp,%rax,4), %eax
+	movl	32(%rsp,%rax,4), %eax
 	movl	%eax, dir(%rip)
 	jmp	.L51
 .L45:
 	movslq	current(%rip), %rax
 	cmpl	$1, %eax
-	jg	.L105
+	jg	.L109
 .L52:
-	leaq	stack(%rip), %r8
-	leaq	.LC8(%rip), %rdi
-	movl	(%r8,%rax,4), %esi
+	leaq	stack(%rip), %r14
+	leaq	.LC9(%rip), %rdi
+	movl	(%r14,%rax,4), %esi
 	xorl	%eax, %eax
 	call	printf@PLT
 	xorl	%eax, %eax
@@ -575,45 +587,45 @@ main:
 	jmp	.L51
 .L46:
 	movslq	current(%rip), %rdx
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	leal	-1(%rdx), %eax
 	cltq
-	movl	(%r8,%rax,4), %ecx
-	subl	(%r8,%rdx,4), %ecx
-	movl	%ecx, (%r8,%rax,4)
+	movl	(%r14,%rax,4), %ecx
+	subl	(%r14,%rdx,4), %ecx
+	movl	%ecx, (%r14,%rax,4)
 	xorl	%eax, %eax
 	call	pop
 	jmp	.L51
 .L47:
 	movslq	current(%rip), %rsi
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	leal	-1(%rsi), %ecx
 	movslq	%ecx, %rcx
-	movl	(%r8,%rcx,4), %eax
+	movl	(%r14,%rcx,4), %eax
 	cltd
-	idivl	(%r8,%rsi,4)
-	movl	%eax, (%r8,%rcx,4)
+	idivl	(%r14,%rsi,4)
+	movl	%eax, (%r14,%rcx,4)
 	xorl	%eax, %eax
 	call	pop
 	jmp	.L51
 .L48:
 	movslq	current(%rip), %rdx
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	leal	-1(%rdx), %eax
-	movl	(%r8,%rdx,4), %edx
+	movl	(%r14,%rdx,4), %edx
 	cltq
-	addl	%edx, (%r8,%rax,4)
+	addl	%edx, (%r14,%rax,4)
 	xorl	%eax, %eax
 	call	pop
 	jmp	.L51
 .L49:
 	movslq	current(%rip), %rdx
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	leal	-1(%rdx), %eax
-	movl	(%r8,%rdx,4), %edx
+	movl	(%r14,%rdx,4), %edx
 	cltq
-	imull	(%r8,%rax,4), %edx
-	movl	%edx, (%r8,%rax,4)
+	imull	(%r14,%rax,4), %edx
+	movl	%edx, (%r14,%rax,4)
 	xorl	%eax, %eax
 	call	pop
 	jmp	.L51
@@ -633,33 +645,33 @@ main:
 	jmp	.L51
 .L53:
 	movslq	current(%rip), %rax
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	leal	-1(%rax), %ecx
-	movl	(%r8,%rax,4), %eax
+	movl	(%r14,%rax,4), %eax
 	movslq	%ecx, %rcx
 	cltd
-	idivl	(%r8,%rcx,4)
+	idivl	(%r14,%rcx,4)
 	xorl	%eax, %eax
-	movl	%edx, (%r8,%rcx,4)
+	movl	%edx, (%r14,%rcx,4)
 	call	pop
 	jmp	.L51
 .L54:
 	movslq	current(%rip), %rcx
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	movq	%rcx, %rax
-	movl	(%r8,%rcx,4), %esi
+	movl	(%r14,%rcx,4), %esi
 	subl	$1, %eax
 	movslq	%eax, %rdx
 	movl	%eax, current(%rip)
-	movl	(%r8,%rdx,4), %edi
-	movl	%edi, (%r8,%rcx,4)
-	movl	%esi, (%r8,%rdx,4)
+	movl	(%r14,%rdx,4), %edi
+	movl	%edi, (%r14,%rcx,4)
+	movl	%esi, (%r14,%rdx,4)
 	jmp	.L51
 .L55:
 	movl	dir(%rip), %eax
 	subl	$1, %eax
 	cltq
-	movl	48(%rsp,%rax,4), %eax
+	movl	64(%rsp,%rax,4), %eax
 	movl	%eax, dir(%rip)
 	jmp	.L51
 .L56:
@@ -668,12 +680,12 @@ main:
 	movslq	r(%rip), %rax
 	movslq	c(%rip), %rdx
 	salq	$7, %rax
-	addq	$1792, %rax
+	addq	$1808, %rax
 	addq	%rsp, %rax
 	movsbl	-1296(%rdx,%rax), %eax
 	cmpb	$34, %al
 	je	.L51
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	.p2align 4,,10
 	.p2align 3
 .L69:
@@ -682,12 +694,12 @@ main:
 	leal	1(%rcx), %edx
 	movslq	%edx, %rcx
 	movl	%edx, current(%rip)
-	movl	%eax, (%r8,%rcx,4)
+	movl	%eax, (%r14,%rcx,4)
 	call	move
 	movslq	r(%rip), %rax
 	movslq	c(%rip), %rdx
 	salq	$7, %rax
-	addq	$1792, %rax
+	addq	$1808, %rax
 	addq	%rsp, %rax
 	movsbl	-1296(%rdx,%rax), %eax
 	cmpb	$34, %al
@@ -702,21 +714,13 @@ main:
 	jne	.L51
 	movl	$-1, c(%rip)
 	jmp	.L51
-.L102:
-	movl	current(%rip), %ecx
-	leaq	stack(%rip), %r8
-	subl	$48, %eax
-	leal	1(%rcx), %edx
-	movslq	%edx, %rdx
-	movl	%eax, (%r8,%rdx,4)
-	jmp	.L66
-.L105:
+.L109:
 	movslq	%eax, %rdx
 	subl	$1, %eax
-	leaq	stack(%rip), %r8
+	leaq	stack(%rip), %r14
 	cltq
-	movl	(%r8,%rdx,4), %edx
-	movl	(%r8,%rax,4), %eax
+	movl	(%r14,%rdx,4), %edx
+	movl	(%r14,%rax,4), %eax
 	movl	%edx, r(%rip)
 	movl	%eax, c(%rip)
 	xorl	%eax, %eax
@@ -724,20 +728,22 @@ main:
 	xorl	%eax, %eax
 	call	pop
 	jmp	.L51
-.L103:
+.L106:
+	movl	%eax, %ecx
+	movq	%r14, %rdi
+	shrl	$3, %ecx
+	rep movsq
+	jmp	.L65
+.L107:
 	cmpl	$-1, r(%rip)
 	jne	.L76
 	subl	$1, %ebx
 	movl	%ebx, r(%rip)
 	jmp	.L76
-.L84:
+.L86:
 	movslq	current(%rip), %rax
 	jmp	.L52
-.L67:
-	subl	$61, %eax
-	movl	%eax, (%r8,%rdx,4)
-	jmp	.L66
-.L104:
+.L108:
 	call	__stack_chk_fail@PLT
 	.cfi_endproc
 .LFE22:
@@ -749,12 +755,6 @@ main:
 	.size	dir, 4
 dir:
 	.long	2
-	.globl	d
-	.align 4
-	.type	d, @object
-	.size	d, 4
-d:
-	.long	1
 	.globl	r
 	.bss
 	.align 4
