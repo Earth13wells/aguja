@@ -132,7 +132,7 @@ int main(int argc, char *argv[]){
                 move(1);
                 break;
             case '?': //Conditional trampoline
-                if(stack[current] == 0){
+                if(stack[current] == 0){ //stack 0 should be 0 when empty
                     move(1);
                 }
                 pop();
@@ -157,8 +157,9 @@ int main(int argc, char *argv[]){
                 /*
                     Fun Fact: if the user inputs
                         multiple charecters, running
-                        '@' again will grab the next
-                        character
+                        '[' again will grab the next
+                        character might be cool to add
+                        a way to check how many more there are????
                 */
                 scanf(" %c", &num);
                 stack[current+1] = num;
@@ -180,9 +181,11 @@ int main(int argc, char *argv[]){
             case '@':
                 for(b = 0; b <= current; b++ ){
                     reverse[b] = stack[current-b];
+                    //printf("reverse = %c\n", reverse[b]);
                 }
                 for(b = 0; b <= current; b++ ){
                     stack[b] = reverse[b];
+                //printf("stack = %c\n", stack[b]);
                 }
                 break;
             case 'l': //Push the length of the stack onto stack
@@ -278,6 +281,11 @@ int move(int d){
     }
 }
 int pop(){
-    stack[current] = null[1];
+    if(current != 0){
+        stack[current] = null[1];
+    }
+    else{
+        stack[current] = 0;
+    }
     if(current!=0){current--;}
 }

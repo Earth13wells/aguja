@@ -37,25 +37,25 @@
 |    [        |   Push user input to top of stack as ascii value                |
 |    ]        |   Push user input to top of stack as regular                    |
 |    l        |   Push the length of the stack onto stack                       |
-|    \+       |    Pop x,y, push x+y                                            |
-|    \-       |    Pop x,y, push x-y                                            |
-|    \*       |    Pop x,y, push x*y                                            |
-|    \,       |    Pop x,y, push x/y                                            |
+|    +       |    Pop x,y, push x+y                                            |
+|    -       |    Pop x,y, push x-y                                            |
+|    *       |    Pop x,y, push x*y                                            |
+|    ,       |    Pop x,y, push x/y                                            |
 |    %        |   Pop x,y, push x%y                                             |
 |    =        |   Pop x,y push 1 if true, otherwise push 0                      |
-|    \"       |    Pushes every character found to the stack until closed       |   
-|    /\\      |   90° mirrors change IP direction based on input                |
-|    \#       |    180° mirror (Direction agnostic)                             |
-|    \|_      |   180° mirrors change IP direction based on input               |
+|    "       |    Pushes every character found to the stack until closed       |   
+|    /\      |   90° mirrors change IP direction based on input                |
+|    #       |    180° mirror (Direction agnostic)                             |
+|    |_      |   180° mirrors change IP direction based on input               |
 |    .        |   Pop y and x move the IP to (x,y)                              |
 |    &        |   Pop as number and print to stdout                             |
-|    \`       |   Pop as character and print to stdout                          |
+|    `       |   Pop as character and print to stdout                          |
 |    \n       |   Move IP to start of row                                       |
 |    ;        |   End the program                                               |
   ```
 ## Hello, Wold     
   ```
-    "!dlrow ,olleH"> \`v                                
+    "!dlrow ,olleH"> `v                                
                   ;^!?<
   ```
 ## Truth machine    
