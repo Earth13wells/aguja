@@ -1,0 +1,2 @@
+*.s linguist-detectable=false
+*.o linguist-detectable=false
