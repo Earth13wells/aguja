@@ -132,7 +132,7 @@ int main(int argc, char *argv[]){
                 move(1);
                 break;
             case '?': //Conditional trampoline
-                if(stack[current] == 0){ //stack 0 should be 0 when empty
+                if(stack[current] != 0){ //stack 0 should be 0 when empty
                     move(1);
                 }
                 pop();
@@ -229,7 +229,7 @@ int main(int argc, char *argv[]){
             case '.': //Pop y and x move the IP to (x,y)
                 if(current > 1){
                     r = stack[current];
-                    c = stack[current-1];
+                    c = stack[current-1]-1;
                     pop();
                     pop();
                     break;
